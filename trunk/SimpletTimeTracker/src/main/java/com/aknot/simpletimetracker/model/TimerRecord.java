@@ -30,12 +30,34 @@ public final class TimerRecord implements Serializable {
 		return rowId;
 	}
 
-	public void setRowId(int rowId) {
+	public void setRowId(final int rowId) {
 		this.rowId = rowId;
 	}
 
 	public long getDurationInMilliseconds() {
 		return endTime - startTime;
+	}
+
+	public int getStartTimeComponent(final int componentId) {
+		calendar.setTimeInMillis(startTime);
+		return calendar.get(componentId);
+	}
+
+	public void setStartTimeComponent(final int componentId, final int value) {
+		calendar.setTimeInMillis(startTime);
+		calendar.set(componentId, value);
+		startTime = calendar.getTimeInMillis();
+	}
+
+	public int getEndTimeComponent(final int componentId) {
+		calendar.setTimeInMillis(endTime);
+		return calendar.get(componentId);
+	}
+
+	public void setEndTimeComponent(final int componentId, final int value) {
+		calendar.setTimeInMillis(endTime);
+		calendar.set(componentId, value);
+		endTime = calendar.getTimeInMillis();
 	}
 
 	public String getStartDateStr() {
@@ -46,28 +68,6 @@ public final class TimerRecord implements Serializable {
 		}
 	}
 
-	public int getStartTimeComponent(int componentId) {
-		calendar.setTimeInMillis(startTime);
-		return calendar.get(componentId);
-	}
-
-	public void setStartTimeComponent(int componentId, int value) {
-		calendar.setTimeInMillis(startTime);
-		calendar.set(componentId, value);
-		startTime = calendar.getTimeInMillis();
-	}
-
-	public int getEndTimeComponent(int componentId) {
-		calendar.setTimeInMillis(endTime);
-		return calendar.get(componentId);
-	}
-
-	public void setEndTimeComponent(int componentId, int value) {
-		calendar.setTimeInMillis(endTime);
-		calendar.set(componentId, value);
-		endTime = calendar.getTimeInMillis();
-	}
-
 	public String getStartTimeStr() {
 		if (startTime == 0) {
 			return "";
@@ -76,8 +76,17 @@ public final class TimerRecord implements Serializable {
 		}
 	}
 
-	public String getEndTimeStr() {
+	public String getEstimatedEndTimeStr(final long totalToday) {
 		if (startTime == 0) {
+			return "";
+		} else {
+			final long estimatedTime = startTime + category.getTargetHour() * 3600000 - totalToday;
+			return DateTimeUtil.formatTime(estimatedTime).toString();
+		}
+	}
+
+	public String getEndTimeStr() {
+		if (endTime == 0) {
 			return "";
 		} else {
 			return DateTimeUtil.formatTime(endTime).toString();
@@ -88,7 +97,7 @@ public final class TimerRecord implements Serializable {
 		return category;
 	}
 
-	public void setCategory(CategoryRecord category) {
+	public void setCategory(final CategoryRecord category) {
 		this.category = category;
 	}
 
@@ -96,7 +105,7 @@ public final class TimerRecord implements Serializable {
 		return startTime;
 	}
 
-	public void setStartTime(long startTime) {
+	public void setStartTime(final long startTime) {
 		this.startTime = startTime;
 	}
 
@@ -104,7 +113,7 @@ public final class TimerRecord implements Serializable {
 		return endTime;
 	}
 
-	public void setEndTime(long endTime) {
+	public void setEndTime(final long endTime) {
 		this.endTime = endTime;
 	}
 

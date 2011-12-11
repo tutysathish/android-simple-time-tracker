@@ -53,7 +53,7 @@ public final class CategoriesDialog extends Dialog {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				CategoryRecord category = (CategoryRecord) categories.getItemAtPosition(arg2);
-				callback.punchIn(category);
+				callback.checkIn(category);
 				dismiss();
 			}
 

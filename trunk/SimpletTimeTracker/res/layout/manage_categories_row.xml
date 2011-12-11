@@ -8,18 +8,30 @@
         android:id="@+id/category_list_view_name_field"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:text="Category Name"
         android:textColor="#FFFFFF"
-        android:textSize="16sp" />
+        android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/category_list_view_description_field"
+    <LinearLayout
+        android:id="@+id/linearLayoutSub"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
         android:layout_marginLeft="6dip"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="Category Description" />
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/category_list_view_description_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category Description" />
+
+        <TextView
+            android:id="@+id/category_list_view_target_hour_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category Target Hour" />
+
+    </LinearLayout>
 
 </LinearLayout>

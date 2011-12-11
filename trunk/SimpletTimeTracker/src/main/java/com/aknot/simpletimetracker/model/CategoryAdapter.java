@@ -22,7 +22,7 @@ public final class CategoryAdapter extends ArrayAdapter<CategoryRecord> {
 	private final int viewId;
 	private final List<CategoryRecord> items;
 
-	public CategoryAdapter(Context context, int textViewResourceId, List<CategoryRecord> items, boolean withDescription) {
+	public CategoryAdapter(final Context context, final int textViewResourceId, final List<CategoryRecord> items, final boolean withDescription) {
 		super(context, textViewResourceId, items);
 		this.items = items;
 		this.context = context;
@@ -30,26 +30,29 @@ public final class CategoryAdapter extends ArrayAdapter<CategoryRecord> {
 		this.viewId = textViewResourceId;
 	}
 
-	public static CategoryAdapter getCategoryAdapterFromDB(Context context, int viewId, boolean withDescription) {
-		CategoryDBAdapter CategoryDBAdapter = new CategoryDBAdapter(context);
-		List<CategoryRecord> categories = CategoryDBAdapter.fetchAllCategories();
+	public static CategoryAdapter getCategoryAdapterFromDB(final Context context, final int viewId, final boolean withDescription) {
+		final CategoryDBAdapter CategoryDBAdapter = new CategoryDBAdapter(context);
+		final List<CategoryRecord> categories = CategoryDBAdapter.fetchAllCategories();
 		return new CategoryAdapter(context, viewId, categories, withDescription);
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		View view = convertView;
 		if (view == null) {
-			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			final LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = layoutInflater.inflate(viewId, null);
 		}
-		CategoryRecord category = items.get(position);
+		final CategoryRecord category = items.get(position);
 		if (category != null) {
-			TextView categoryNameView = (TextView) view.findViewById(R.id.category_list_view_name_field);
-			TextView categoryDescriptionView = (TextView) view.findViewById(R.id.category_list_view_description_field);
+			final TextView categoryNameView = (TextView) view.findViewById(R.id.category_list_view_name_field);
+			final TextView categoryDescriptionView = (TextView) view.findViewById(R.id.category_list_view_description_field);
+			final TextView catTargetField = (TextView) view.findViewById(R.id.category_list_view_target_hour_field);
+
 			if (withDescription) {
 				categoryNameView.setText("Name: " + category.getCategoryName());
 				categoryDescriptionView.setText("Description: " + category.getDescription());
+				catTargetField.setText("Target Hour: " + category.getTargetHour());
 			} else {
 				categoryNameView.setText(category.getCategoryName());
 			}

@@ -30,6 +30,18 @@
         android:capitalize="sentences" >
     </EditText>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/category_target_label" />
+
+    <EditText
+        android:id="@+id/edit_target_hours_field"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:inputType="number" >
+    </EditText>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

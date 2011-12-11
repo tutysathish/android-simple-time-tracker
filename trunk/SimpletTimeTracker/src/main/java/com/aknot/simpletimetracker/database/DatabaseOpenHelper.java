@@ -13,7 +13,7 @@ import android.util.Log;
  */
 public final class DatabaseOpenHelper extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	public static final String CATEGORY_TABLE = "stt_category";
 	public static final String TIMER_TABLE = "stt_timer";
@@ -24,7 +24,7 @@ public final class DatabaseOpenHelper extends SQLiteOpenHelper {
 	 * @param context
 	 * @param databaseName
 	 */
-	DatabaseOpenHelper(final Context context, String databaseName) {
+	DatabaseOpenHelper(final Context context, final String databaseName) {
 		super(context, databaseName, null, DATABASE_VERSION);
 	}
 
@@ -38,6 +38,8 @@ public final class DatabaseOpenHelper extends SQLiteOpenHelper {
 
 		db.execSQL("CREATE TABLE " + TIMER_TABLE + " (_id integer primary key autoincrement, " + "category_id integer, start_time date, end_time date)");
 		Log.i(this.getClass().toString(), "Created table : " + TIMER_TABLE);
+
+		upgradeToVersion2(db);
 	}
 
 	/**
@@ -45,7 +47,15 @@ public final class DatabaseOpenHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
-		Log.w(this.getClass().toString(), "No upgrade needed");
+		Log.i(this.getClass().toString(), "Upgrading database from version " + oldVersion + " to " + newVersion);
+		if (oldVersion < 2) {
+			upgradeToVersion2(db);
+		}
+	}
+
+	private void upgradeToVersion2(final SQLiteDatabase db) {
+		db.execSQL("ALTER TABLE " + CATEGORY_TABLE + " ADD COLUMN target_hour integer");
+		Log.i(this.getClass().toString(), "Upgraded table (col target_hour added) : " + TIMER_TABLE);
 	}
 
 }

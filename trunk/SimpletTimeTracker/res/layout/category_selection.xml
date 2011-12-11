@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="#756a5acd" >
 
     <TextView
         android:id="@+id/category_list_view_name_field"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#756a5acd"
+        android:layout_marginBottom="10dp"
         android:gravity="center_vertical"
-        android:text="This is an example"
         android:textColor="#FFFFFF"
-        android:textSize="22sp" />
+        android:textSize="25sp" 
+    	android:text="This is an example" />
 
 </LinearLayout>

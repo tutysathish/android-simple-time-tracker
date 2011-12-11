@@ -13,12 +13,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.Chronometer.OnChronometerTickListener;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aknot.simpletimetracker.R;
 import com.aknot.simpletimetracker.database.TimerDBAdapter;
 import com.aknot.simpletimetracker.dialog.CategoriesDialog;
+import com.aknot.simpletimetracker.dialog.TimerEditDialog;
 import com.aknot.simpletimetracker.model.CategoryRecord;
+import com.aknot.simpletimetracker.model.TimerRecord;
 import com.aknot.simpletimetracker.utils.DateTimeUtil;
 import com.aknot.simpletimetracker.utils.SessionData;
 
@@ -28,13 +31,19 @@ import com.aknot.simpletimetracker.utils.SessionData;
 public final class TimerActivity extends Activity {
 
 	private Chronometer chronometer;
+	private ProgressBar progressBar;
+
 	private SessionData sessionData = new SessionData();
+
 	private final TimerDBAdapter timerDBAdapter = new TimerDBAdapter(this);
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab_timer);
+
+		progressBar = (ProgressBar) findViewById(R.id.timerProgressBar);
+		chronometer = (Chronometer) findViewById(R.id.chron);
 	}
 
 	@Override
@@ -42,7 +51,7 @@ public final class TimerActivity extends Activity {
 		super.onResume();
 
 		setupButtons();
-		createChronometer();
+		setupChronometer();
 
 		restoreSession();
 		setupScreenLabels();
@@ -60,14 +69,14 @@ public final class TimerActivity extends Activity {
 		punchInButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View view) {
-				punchInCategory();
+				checkInCategory();
 			}
 		});
 		final Button punchOutButton = (Button) findViewById(R.id.btnPunchOut);
 		punchOutButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View view) {
-				punchOut();
+				checkOut();
 			}
 		});
 	}
@@ -79,29 +88,56 @@ public final class TimerActivity extends Activity {
 		final TextView tvDate = (TextView) findViewById(R.id.currentDate);
 		tvDate.setText("Date : " + DateTimeUtil.getCurrentFormatedDate());
 
-		final TextView labelTv = (TextView) findViewById(R.id.tvTimeInActivity);
-		final TextView tvStartTime = (TextView) findViewById(R.id.tvStartTime);
-
 		boolean showTv = sessionData.getCurrentTimerRecord() != null;
 		showTv &= sessionData.getCurrentTimerRecord().getCategory() != null;
 		showTv &= !sessionData.isPunchedOut();
 
+		final TextView labelTv = (TextView) findViewById(R.id.tvTimeInActivity);
+		final TextView tvStartTime = (TextView) findViewById(R.id.tvStartTime);
+		final TextView tvEndTime = (TextView) findViewById(R.id.tvEndTime);
+
 		if (showTv) {
-			labelTv.setText("Time spent " + sessionData.getCurrentTimerRecord().getCategory().getCategoryName() + ": ");
+			labelTv.setText("Time spent : " + sessionData.getCurrentTimerRecord().getCategory().getCategoryName());
 			tvStartTime.setText("Start time : " + sessionData.getCurrentTimerRecord().getStartTimeStr());
+			tvEndTime.setText("End time : " + sessionData.getCurrentTimerRecord().getEstimatedEndTimeStr(sessionData.getTodayBase()));
 		} else {
 			labelTv.setText("No current activity");
 			tvStartTime.setText("Start time : ");
+			tvEndTime.setText("End time : ");
+		}
+
+		tvStartTime.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(final View view) {
+				showDialog();
+			}
+		});
+	}
+
+	private void showDialog() {
+		if (!sessionData.isPunchedOut()) {
+			final TimerEditDialog timerEditDialog = new TimerEditDialog(this);
+			timerEditDialog.buildEditDialog(sessionData.getCurrentTimerRecord(), this).show();
 		}
 	}
 
-	private void punchInCategory() {
+	public void saveTimer(final TimerRecord timerToSave) {
+		 chronometer.stop();
+		 long newElapsedTime = SystemClock.elapsedRealtime() - (System.currentTimeMillis() - timerToSave.getStartTime());
+		 sessionData.setPunchInBase(newElapsedTime);
+		 chronometer.setBase(newElapsedTime);
+		 chronometer.start();
+		 setupScreenLabels();
+		 saveState();
+	}
+
+	private void checkInCategory() {
 		final CategoriesDialog dialog = new CategoriesDialog(this, R.style.DialogStyle);
 		dialog.setCallback(this);
 		dialog.show();
 	}
 
-	public void punchIn(final CategoryRecord selectedCategory) {
+	public void checkIn(final CategoryRecord selectedCategory) {
 		// If the category is the same, continue timer
 		if (((sessionData.getCategory() != null) && !sessionData.getCategory().equals(selectedCategory)) || sessionData.isPunchedOut()) {
 
@@ -127,7 +163,7 @@ public final class TimerActivity extends Activity {
 		}
 	}
 
-	private void punchOut() {
+	private void checkOut() {
 		if (!sessionData.isPunchedOut()) {
 
 			sessionData.stopTimer();
@@ -144,8 +180,7 @@ public final class TimerActivity extends Activity {
 	/**
 	 * This method create the chronometer and his listener.
 	 */
-	private void createChronometer() {
-		chronometer = (Chronometer) findViewById(R.id.chron);
+	private void setupChronometer() {
 		chronometer.setOnChronometerTickListener(new OnChronometerTickListener() {
 			@Override
 			public void onChronometerTick(final Chronometer chronometer) {
@@ -162,6 +197,15 @@ public final class TimerActivity extends Activity {
 				final long weekElapsed = (tick - chronometer.getBase()) + sessionData.getWeekBase();
 				final TextView weekViewChronOutput = (TextView) findViewById(R.id.weekViewChronOutput);
 				weekViewChronOutput.setText("Week : " + DateTimeUtil.hrColMinColSec(weekElapsed, false));
+				// Progress Bar
+				final int targetHour = sessionData.getCurrentTimerRecord().getCategory().getTargetHour();
+				if (targetHour == 0) {
+					progressBar.setProgress(100);
+				} else {
+					final long progressTarget = targetHour * 3600000;
+					progressBar.setProgress((int) (todayElapsed * 100 / progressTarget));
+				}
+
 			}
 		});
 	}
@@ -178,27 +222,27 @@ public final class TimerActivity extends Activity {
 	private void saveState() {
 		deleteFile("curr_state");
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(openFileOutput("curr_state", 0));
+			final ObjectOutputStream out = new ObjectOutputStream(openFileOutput("curr_state", 0));
 			out.writeObject(sessionData);
 			out.close();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Log.e("TimeTracker", "Error Saving State", e);
 		}
 	}
 
 	private void reloadState() {
 		try {
-			String[] fileList = fileList();
-			for (String fileName : fileList) {
+			final String[] fileList = fileList();
+			for (final String fileName : fileList) {
 				if (fileName.equals("curr_state")) {
-					ObjectInputStream in = new ObjectInputStream(openFileInput(fileName));
+					final ObjectInputStream in = new ObjectInputStream(openFileInput(fileName));
 					sessionData = (SessionData) in.readObject();
 					in.close();
 				}
 			}
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Log.e("TimeTracker", "Error Loading State", e);
-		} catch (ClassNotFoundException e) {
+		} catch (final ClassNotFoundException e) {
 			Log.e("TimeTracker", "Error Loading State", e);
 		}
 		if (sessionData == null) {

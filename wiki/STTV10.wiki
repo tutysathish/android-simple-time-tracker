@@ -7,6 +7,8 @@ TODO.
 
 = Screenshots =
 
+[http://android-simple-time-tracker.googlecode.com/svn/wiki/stt10-01.png]
+
 TODO.
 
 Add your content here.  Format your content with:

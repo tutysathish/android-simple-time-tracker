@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/category_name_label" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/edit_time_category_name_field"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:capitalize="words" >
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/category_descr_label" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/edit_time_category_desc_field"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:capitalize="sentences" >
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/category_target_label" />
+
+    <EditText
+        android:id="@+id/edit_target_hours_field"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:inputType="number" >
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/edit_time_category_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category_save_button"
+            android:textSize="20sp" >
+        </Button>
+
+        <Button
+            android:id="@+id/edit_time_category_cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="@string/category_cancel_buttton"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.aknot</groupId>
 	<artifactId>SimpletTimeTracker</artifactId>
 	<name>${project.artifactId}</name>
-	<version>1.1-SNAPSHOT</version>
+	<version>1.1</version>
 	<packaging>apk</packaging>
 
 	<properties>
@@ -21,8 +20,8 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpletTimeTracker</connection>
-		<developerConnection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpletTimeTracker</developerConnection>
+		<connection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/tags/SimpletTimeTracker-1.1</connection>
+		<developerConnection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/tags/SimpletTimeTracker-1.1</developerConnection>
 	</scm>
 
 	<build>
@@ -80,7 +79,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore />
 									</action>
 								</pluginExecution>
 							</pluginExecutions>

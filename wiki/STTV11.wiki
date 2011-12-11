@@ -19,6 +19,7 @@ The star time and an estimate of the end time.
 *Tab Summary*
 
 This tab show the week summary, with a day total per category selected.
+For each category you will get the corresponding hour target.
 
 *Tab Report*
 

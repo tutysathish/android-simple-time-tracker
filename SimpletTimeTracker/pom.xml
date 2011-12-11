@@ -58,4 +58,15 @@
 		</plugins>
 	</build>
 
+
+	<distributionManagement>
+		<repository>
+			<id>myRepo</id>
+			<name>Aknot Deploy Repository</name>
+			<url>file://C:\Java\android-deploy</url>
+		</repository>
+	</distributionManagement>
+				
+
+
 </project>

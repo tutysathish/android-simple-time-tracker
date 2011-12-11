@@ -4,12 +4,15 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.TabHost;
 
 import com.aknot.simpletimetracker.R;
 import com.aknot.simpletimetracker.database.DatabaseInstance;
+import com.aknot.simpletimetracker.widget.FlingableTabHost;
 
 /**
  * This is the main class of the application.
@@ -18,21 +21,27 @@ import com.aknot.simpletimetracker.database.DatabaseInstance;
  */
 public final class MainActivity extends TabActivity {
 
+	private GestureDetector gestureDetector;
+
 	/**
 	 * Create the main tabbed view.
 	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
 		// Initialize the database.
 		DatabaseInstance.initialize(this);
 
-		Resources res = getResources(); // Resource object to get Drawables.
-		TabHost tabHost = getTabHost(); // The activity TabHost.
-		TabHost.TabSpec spec; // Resusable TabSpec for each tab.
-		Intent intent; // Reusable Intent for each tab.
+		// Resource object to get Drawables.
+		final Resources res = getResources();
+		// The activity TabHost.
+		final FlingableTabHost tabHost = (FlingableTabHost) getTabHost();
+		// Resusable TabSpec for each tab.
+		TabHost.TabSpec spec;
+		// Reusable Intent for each tab.
+		Intent intent;
 
 		// Initialize a TabSpec for each tab and add it to the TabHost
 		// Create an Intent to launch an Activity for the tab (to be reused)
@@ -49,7 +58,13 @@ public final class MainActivity extends TabActivity {
 		spec = tabHost.newTabSpec("tab3").setIndicator(res.getString(R.string.report_label), res.getDrawable(R.drawable.ic_tab_report)).setContent(intent);
 		tabHost.addTab(spec);
 
-		tabHost.setCurrentTab(0);
+		if (savedInstanceState != null) {
+			tabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
+		} else {
+			tabHost.setCurrentTab(0);
+		}
+
+		gestureDetector = tabHost.getGesture();
 	}
 
 	/**
@@ -73,18 +88,32 @@ public final class MainActivity extends TabActivity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	protected void onSaveInstanceState(final Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString("tab", getTabHost().getCurrentTabTag());
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, Menu.FIRST, 0, R.string.categories_label);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		// Call Menu activity
-		Intent intent = new Intent(this, CategoryActivity.class);
+		final Intent intent = new Intent(this, CategoryActivity.class);
 		startActivity(intent);
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public boolean onTouchEvent(final MotionEvent event) {
+		if (gestureDetector.onTouchEvent(event)) {
+			return true;
+		}
+		return false;
 	}
 
 }

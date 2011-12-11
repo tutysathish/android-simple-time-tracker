@@ -5,6 +5,7 @@ import java.io.Serializable;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
+import com.aknot.simpletimetracker.R;
 import com.aknot.simpletimetracker.database.CategoryDBAdapter;
 
 /**
@@ -18,12 +19,13 @@ public final class CategoryRecord implements Serializable, Comparable<CategoryRe
 
 	private String categoryName;
 	private String description;
+	private int targetHour;
 
 	public int getRowId() {
 		return rowId;
 	}
 
-	public void setRowId(int rowId) {
+	public void setRowId(final int rowId) {
 		this.rowId = rowId;
 	}
 
@@ -34,7 +36,7 @@ public final class CategoryRecord implements Serializable, Comparable<CategoryRe
 		return categoryName;
 	}
 
-	public void setCategoryName(String categoryName) {
+	public void setCategoryName(final String categoryName) {
 		this.categoryName = categoryName;
 	}
 
@@ -45,14 +47,24 @@ public final class CategoryRecord implements Serializable, Comparable<CategoryRe
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
-	public static ArrayAdapter<CategoryRecord> getCategoryAdapter(Context context) {
-		CategoryDBAdapter categoryDBAdapter = new CategoryDBAdapter(context);
-		CategoryRecord[] categories = categoryDBAdapter.fetchAllCategories().toArray(new CategoryRecord[0]);
-		return new ArrayAdapter<CategoryRecord>(context, android.R.layout.simple_spinner_item, categories);
+	public int getTargetHour() {
+		return targetHour;
+	}
+
+	public void setTargetHour(final int targetHour) {
+		this.targetHour = targetHour;
+	}
+
+	public static ArrayAdapter<CategoryRecord> getCategoryAdapter(final Context context) {
+		final CategoryDBAdapter categoryDBAdapter = new CategoryDBAdapter(context);
+		final CategoryRecord[] categories = categoryDBAdapter.fetchAllCategories().toArray(new CategoryRecord[0]);
+		final ArrayAdapter<CategoryRecord> arrayAdapter = new ArrayAdapter<CategoryRecord>(context, android.R.layout.simple_spinner_item, categories);
+		arrayAdapter.setDropDownViewResource(R.layout.categories_spinner_item);
+		return arrayAdapter;
 	}
 
 	@Override
@@ -69,25 +81,30 @@ public final class CategoryRecord implements Serializable, Comparable<CategoryRe
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		CategoryRecord other = (CategoryRecord) obj;
+		}
+		final CategoryRecord other = (CategoryRecord) obj;
 		if (categoryName == null) {
-			if (other.categoryName != null)
+			if (other.categoryName != null) {
 				return false;
-		} else if (!categoryName.equals(other.categoryName))
+			}
+		} else if (!categoryName.equals(other.categoryName)) {
 			return false;
+		}
 		return true;
 	}
 
 	@Override
-	public int compareTo(CategoryRecord anotherTimeSliceCategory) {
-		return this.categoryName.compareTo(anotherTimeSliceCategory.categoryName);
+	public int compareTo(final CategoryRecord anotherCategory) {
+		return this.categoryName.compareTo(anotherCategory.categoryName);
 	}
 
 }

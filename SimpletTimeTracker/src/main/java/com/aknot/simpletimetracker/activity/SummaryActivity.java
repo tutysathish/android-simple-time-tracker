@@ -29,42 +29,44 @@ public final class SummaryActivity extends Activity {
 	private final TimerDBAdapter timerDBAdapter = new TimerDBAdapter(this);
 
 	private long weekTimeElapsed;
+
 	private CategoryRecord category;
 
+	private Spinner catSpinner;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab_summary);
 
 		if (savedInstanceState != null) {
 			category = (CategoryRecord) savedInstanceState.getSerializable("category");
 		}
+
+		catSpinner = (Spinner) findViewById(R.id.spinnerSelectCategory);
+
+		catSpinner.setAdapter(CategoryRecord.getCategoryAdapter(this));
+		catSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(final AdapterView<?> parentView, final View selectedItemView, final int position, final long id) {
+				category = (CategoryRecord) catSpinner.getSelectedItem();
+				fillInSummary(category);
+			}
+
+			@Override
+			public void onNothingSelected(final AdapterView<?> parentView) {
+			}
+		});
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(final Bundle outState) {
 		outState.putSerializable("category", category);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-
-		final Spinner catSpinner = (Spinner) findViewById(R.id.spinnerSelectCategory);
-
-		catSpinner.setAdapter(CategoryRecord.getCategoryAdapter(this));
-		catSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-				category = (CategoryRecord) catSpinner.getSelectedItem();
-				fillInSummary(category);
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-
-			}
-		});
 
 		if (category != null) {
 			for (int position = 0; position < catSpinner.getCount(); position++) {
@@ -77,43 +79,50 @@ public final class SummaryActivity extends Activity {
 		fillInSummary((CategoryRecord) catSpinner.getSelectedItem());
 	}
 
-	private void fillInSummary(CategoryRecord categoryRecord) {
+	private void fillInSummary(final CategoryRecord categoryRecord) {
 
-		Map<String, Map<String, Long>> summaries = loadData(categoryRecord);
+		final Map<String, Map<String, Long>> summaries = loadData(categoryRecord);
 
-		TextView weekSummary = (TextView) findViewById(R.id.weekSummary);
-		weekSummary.setText("Week " + DateTimeUtil.getCurrentWeek() + ": " + timeInMillisToText(weekTimeElapsed));
+		final TextView weekSummary = (TextView) findViewById(R.id.tvWeekSummary);
+		weekSummary.setText("Week " + DateTimeUtil.getCurrentWeek() + " : " + timeInMillisToText(weekTimeElapsed));
 
-		LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayoutSummary);
+		final TextView targetHour = (TextView) findViewById(R.id.tvTargetHour);
+		if (category != null) {
+			targetHour.setText("Target : " + intToText(category.getTargetHour()));
+		} else {
+			targetHour.setText("Target :");
+		}
+
+		final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayoutSummary);
 		linearLayout.removeAllViews();
 
-		for (Entry<String, Map<String, Long>> entry : summaries.entrySet()) {
-			Map<String, Long> summaryRows = entry.getValue();
+		for (final Entry<String, Map<String, Long>> entry : summaries.entrySet()) {
+			final Map<String, Long> summaryRows = entry.getValue();
 
-			TextView headerTextView = new TextView(this);
+			final TextView headerTextView = new TextView(this);
 			headerTextView.setText(entry.getKey());
 			headerTextView.setTextColor(Color.GREEN);
 
 			linearLayout.addView(headerTextView);
 
-			for (Entry<String, Long> rowCaption : summaryRows.entrySet()) {
-				long totalTimeInMillis = rowCaption.getValue();
-				TextView rowTextView = new TextView(this);
+			for (final Entry<String, Long> rowCaption : summaryRows.entrySet()) {
+				final long totalTimeInMillis = rowCaption.getValue();
+				final TextView rowTextView = new TextView(this);
 				rowTextView.setText("    " + rowCaption.getKey() + ": " + timeInMillisToText(totalTimeInMillis));
 				linearLayout.addView(rowTextView);
 			}
 		}
 	}
 
-	private Map<String, Map<String, Long>> loadData(CategoryRecord categoryRecord) {
-		List<TimerRecord> timerRecords = timerDBAdapter.fetchLastTimerRecordsByCategory(categoryRecord.getRowId());
+	private Map<String, Map<String, Long>> loadData(final CategoryRecord categoryRecord) {
+		final List<TimerRecord> timerRecords = timerDBAdapter.fetchLastTimerRecordsByCategory(categoryRecord.getRowId());
 
-		Map<String, Map<String, Long>> summaries = new LinkedHashMap<String, Map<String, Long>>();
+		final Map<String, Map<String, Long>> summaries = new LinkedHashMap<String, Map<String, Long>>();
 
 		weekTimeElapsed = 0;
 
-		for (TimerRecord timerRecord : timerRecords) {
-			String header = timerRecord.getStartDateStr();
+		for (final TimerRecord timerRecord : timerRecords) {
+			final String header = timerRecord.getStartDateStr();
 			Map<String, Long> group = summaries.get(header);
 
 			if (group == null) {
@@ -121,13 +130,13 @@ public final class SummaryActivity extends Activity {
 				summaries.put(header, group);
 			}
 
-			String reportLine = timerRecord.getCategory().getCategoryName();
+			final String reportLine = timerRecord.getCategory().getCategoryName();
 
 			Long timeSum = group.get(reportLine);
 			if (timeSum == null) {
 				timeSum = Long.valueOf(0);
 			}
-			long elapsed = timerRecord.getEndTime() - timerRecord.getStartTime();
+			final long elapsed = timerRecord.getEndTime() - timerRecord.getStartTime();
 
 			weekTimeElapsed += elapsed;
 
@@ -137,23 +146,32 @@ public final class SummaryActivity extends Activity {
 		return summaries;
 	}
 
-	private String timeInMillisToText(long totalTimeInMillis) {
-		long minutes = (totalTimeInMillis / (1000 * 60)) % 60;
-		long hours = totalTimeInMillis / (1000 * 60 * 60);
+	private String intToText(final int hours) {
 		String hoursWord;
-		if (hours == 1) {
+		if (hours == 1 || hours == 0) {
+			hoursWord = "hour";
+		} else {
+			hoursWord = "hours";
+		}
+		return hours + " " + hoursWord;
+	}
+
+	private String timeInMillisToText(final long totalTimeInMillis) {
+		final long minutes = (totalTimeInMillis / (1000 * 60)) % 60;
+		final long hours = totalTimeInMillis / (1000 * 60 * 60);
+		String hoursWord;
+		if (hours == 1 || hours == 0) {
 			hoursWord = "hour";
 		} else {
 			hoursWord = "hours";
 		}
 		String minutesWord;
-		if (minutes == 1) {
+		if (minutes == 1 || minutes == 0) {
 			minutesWord = "minute";
 		} else {
 			minutesWord = "minutes";
 		}
-		String timeString = hours + " " + hoursWord + ", " + minutes + " " + minutesWord;
-		return timeString;
+		return hours + " " + hoursWord + ", " + minutes + " " + minutesWord;
 	}
 
 }

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="260dp"
     android:layout_height="wrap_content"
-    android:orientation="vertical" android:minHeight="20dp">
+    android:orientation="vertical" >
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Time:" />
-
+
     <Button
         android:id="@+id/EditTimeIn"
         android:layout_width="fill_parent"
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="End Time:" />
-
+
     <Button
         android:id="@+id/EditTimeOut"
         android:layout_width="fill_parent"
@@ -45,8 +45,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal" >
-
+        android:orientation="horizontal" >
         <Button
             android:id="@+id/ButtonSaveTimerRecord"
             android:layout_width="wrap_content"

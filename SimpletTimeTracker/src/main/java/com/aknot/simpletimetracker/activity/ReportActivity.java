@@ -8,7 +8,6 @@ import java.util.Map;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 
 import com.aknot.simpletimetracker.R;
 import com.aknot.simpletimetracker.database.TimerDBAdapter;
+import com.aknot.simpletimetracker.dialog.TimerEditDialog;
 import com.aknot.simpletimetracker.model.TimerRecord;
 import com.aknot.simpletimetracker.utils.DateTimeUtil;
 
@@ -66,13 +66,13 @@ public final class ReportActivity extends Activity {
 	public boolean onContextItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case 1:
-			showTimerEditDialog(chosenRowId, 0);
+			showTimerDialog(chosenRowId, 0);
 			return true;
 		case 2:
 			buildDeleteRowDialog();
 			return true;
 		case 3:
-			showTimerEditDialog(TimerRecord.NEW_TIMER, DateTimeUtil.geLongFromString(dateSelected));
+			showTimerDialog(TimerRecord.NEW_TIMER, DateTimeUtil.geLongFromString(dateSelected));
 			return true;
 		case 4:
 			buildDeleteRangeDialog();
@@ -82,25 +82,16 @@ public final class ReportActivity extends Activity {
 		}
 	}
 
-	@Override
-	protected void onActivityResult(final int requestCode, final int resultCode, final Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-		if (intent != null) {
-			final Bundle data = intent.getBundleExtra("data");
-			if (data != null) {
-				final TimerRecord updatedTimer = (TimerRecord) data.getSerializable("timer_record");
-				if (updatedTimer.getRowId() == TimerRecord.NEW_TIMER) {
-					timerDBAdapter.createTimer(updatedTimer);
-				} else {
-					timerDBAdapter.updateTimer(updatedTimer);
-				}
-				fillInReport();
-			}
+	public void saveTimer(final TimerRecord timerToSave) {
+		if (timerToSave.getRowId() == TimerRecord.NEW_TIMER) {
+			timerDBAdapter.createTimer(timerToSave);
+		} else {
+			timerDBAdapter.updateTimer(timerToSave);
 		}
+		fillInReport();
 	}
 
 	private void fillInReport() {
-
 		final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayoutReport);
 
 		linearLayout.removeAllViews();
@@ -143,11 +134,9 @@ public final class ReportActivity extends Activity {
 		return tvTimeRecord;
 	}
 
-	private void showTimerEditDialog(final int rowId, final long date) {
-		final Intent intent = new Intent(this, TimerEditActivity.class);
-		intent.putExtra("row_id", rowId);
-		intent.putExtra("date", date);
-		startActivityForResult(intent, 1);
+	private void showTimerDialog(final int rowId, final long date) {
+		final TimerEditDialog timerEditDialog = new TimerEditDialog(this);
+		timerEditDialog.buildEditDialog(rowId, date, this).show();
 	}
 
 	private void buildDeleteRowDialog() {

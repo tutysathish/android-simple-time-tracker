@@ -21,6 +21,12 @@
 		</dependency>
 	</dependencies>
 
+	<scm>
+		<connection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpletTimeTracker</connection>
+		<developerConnection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpletTimeTracker</developerConnection>
+<!--		<url>https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpletTimeTracker</url> -->
+	</scm>
+
 	<build>
 		<plugins>
 			<plugin>

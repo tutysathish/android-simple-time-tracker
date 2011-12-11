@@ -1,4 +1,5 @@
 #summary Help page and screenshots for version 1.0.
+#sidebar TableOfContents
 
 = Version 1.0 help page =
 

@@ -19,6 +19,9 @@
     <string name="summary_title">Timer Summary</string>
 
     <!-- Third tab : reports -->
+    <string name="main_no_items">No items</string>
+    <string name="groupTitle">Groups</string>
+    <string name="childTitle">Children</string>
     <string name="report_label">Report</string>
     <string name="report_title">Timer Report</string>
     <string name="menu_edit">Edit</string>

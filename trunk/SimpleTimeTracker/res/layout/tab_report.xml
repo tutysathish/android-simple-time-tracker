@@ -4,18 +4,15 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <ScrollView
-        android:id="@+id/scrollReport"
+    <ExpandableListView
+        android:id="@+id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <TextView
+        android:id="@+id/android:empty"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:scrollbars="vertical" >
-
-        <LinearLayout
-            android:id="@+id/linearLayoutReport"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" >
-        </LinearLayout>
-    </ScrollView>
+        android:text="@string/main_no_items" />
 
 </LinearLayout>

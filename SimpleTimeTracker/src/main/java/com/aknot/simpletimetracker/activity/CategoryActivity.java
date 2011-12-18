@@ -76,7 +76,7 @@ public class CategoryActivity extends ListActivity {
 			return true;
 		case 2:
 			TimerDBAdapter timerDBAdapter = new TimerDBAdapter(this);
-			if (timerDBAdapter.categoryHasTimeSlices(categoryClicked)) {
+			if (timerDBAdapter.categoryHasTimerRecord(categoryClicked)) {
 				showDeleteWarningDialog();
 			} else {
 				categoryDBAdapter.delete(categoryClicked.getRowId());

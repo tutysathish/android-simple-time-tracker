@@ -18,8 +18,17 @@ public final class DateTimeUtil {
 	private static String timeFormatString = "kk:mm";
 
 	public static String getCurrentWeek() {
+		return getWeek(Calendar.getInstance());
+	}
+
+	public static String getWeek(final Long date) {
 		final Calendar calendar = Calendar.getInstance();
-		int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
+		calendar.setTimeInMillis(date);
+		return getWeek(calendar);
+	}
+
+	public static String getWeek(final Calendar calendar) {
+		final int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
 		return String.valueOf(weekOfYear);
 	}
 
@@ -27,17 +36,17 @@ public final class DateTimeUtil {
 		return formatDate(new Date());
 	}
 
-	public static String formatDate(Date date) {
+	public static String formatDate(final Date date) {
 		return DateFormat.format(dateFormatString, date).toString();
 	}
 
-	public static String formatTime(long time) {
+	public static String formatTime(final long time) {
 		return DateFormat.format(timeFormatString, time).toString();
 	}
 
-	public static StringBuilder hrColMinColSec(long time, boolean alwaysIncludeHours) {
-		long seconds = (time / 1000) % 60;
-		StringBuilder asText = hrColMin(time, alwaysIncludeHours);
+	public static StringBuilder hrColMinColSec(final long time, final boolean alwaysIncludeHours) {
+		final long seconds = (time / 1000) % 60;
+		final StringBuilder asText = hrColMin(time, alwaysIncludeHours);
 		asText.append(":");
 		if (seconds < 10) {
 			asText.append(0);
@@ -46,12 +55,12 @@ public final class DateTimeUtil {
 		return asText;
 	}
 
-	public static StringBuilder hrColMin(long time, boolean alwaysIncludeHours) {
-		long seconds = time / 1000;
-		long minutes = (seconds / 60) % 60;
-		long hours = seconds / (60 * 60);
+	public static StringBuilder hrColMin(final long time, final boolean alwaysIncludeHours) {
+		final long seconds = time / 1000;
+		final long minutes = (seconds / 60) % 60;
+		final long hours = seconds / (60 * 60);
 
-		StringBuilder asText = new StringBuilder();
+		final StringBuilder asText = new StringBuilder();
 		if (alwaysIncludeHours || hours > 0) {
 			if (hours < 10) {
 				asText.append(0);
@@ -70,13 +79,13 @@ public final class DateTimeUtil {
 		return asText;
 	}
 
-	public static Date getDateForMillis(long tick) {
-		Calendar cal = Calendar.getInstance();
+	public static Date getDateForMillis(final long tick) {
+		final Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(tick);
 		return cal.getTime();
 	}
 
-	public static long getMinTimeMillisToday(Calendar calendar) {
+	public static long getMinTimeMillisToday(final Calendar calendar) {
 		Calendar startTotalCalendar = calendar;
 		if (startTotalCalendar == null) {
 			startTotalCalendar = Calendar.getInstance();
@@ -91,7 +100,7 @@ public final class DateTimeUtil {
 		return getMinTimeMillisToday(Calendar.getInstance());
 	}
 
-	public static long getMaxTimeMillisToday(Calendar calendar) {
+	public static long getMaxTimeMillisToday(final Calendar calendar) {
 		Calendar endTotalCalendar = calendar;
 		if (endTotalCalendar == null) {
 			endTotalCalendar = Calendar.getInstance();
@@ -107,7 +116,7 @@ public final class DateTimeUtil {
 	}
 
 	public static long getMinTimeMillisWeek() {
-		Calendar startTotalCalendar = GregorianCalendar.getInstance();
+		final Calendar startTotalCalendar = GregorianCalendar.getInstance();
 		startTotalCalendar.set(Calendar.DAY_OF_WEEK, startTotalCalendar.getFirstDayOfWeek());
 		startTotalCalendar.set(Calendar.HOUR_OF_DAY, 0);
 		startTotalCalendar.set(Calendar.MINUTE, 0);
@@ -115,24 +124,24 @@ public final class DateTimeUtil {
 		return startTotalCalendar.getTimeInMillis();
 	}
 
-	public static Calendar getCalendarFromString(String date) {
-		SimpleDateFormat inputFormat = new SimpleDateFormat("E, MMMM dd, yyyy");
+	public static Calendar getCalendarFromString(final String date) {
+		final SimpleDateFormat inputFormat = new SimpleDateFormat("E, MMMM dd, yyyy");
 		Date parsedDate = new Date();
 		try {
 			parsedDate = inputFormat.parse(date);
-		} catch (ParseException e) {
+		} catch (final ParseException e) {
 			Log.e("DATE_PARSER", "Error: Impossible to parse input string to calendar.", e);
 			throw new RuntimeException(e);
 		}
 
-		Calendar currentDate = Calendar.getInstance();
+		final Calendar currentDate = Calendar.getInstance();
 		currentDate.setTime(parsedDate);
 
 		return currentDate;
 	}
 
-	public static long geLongFromString(String date) {
-		Calendar calendar = getCalendarFromString(date);
+	public static long geLongFromString(final String date) {
+		final Calendar calendar = getCalendarFromString(date);
 		return calendar.getTimeInMillis();
 	}
 

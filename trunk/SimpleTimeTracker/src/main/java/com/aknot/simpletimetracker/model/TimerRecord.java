@@ -9,6 +9,8 @@ import android.text.format.DateFormat;
 import com.aknot.simpletimetracker.utils.DateTimeUtil;
 
 /**
+ * Record to store the timer.
+ * 
  * @author Aknot
  */
 public final class TimerRecord implements Serializable {
@@ -80,7 +82,7 @@ public final class TimerRecord implements Serializable {
 		if (startTime == 0) {
 			return "";
 		} else {
-			final long estimatedTime = startTime + category.getTargetHour() * 3600000 - totalToday;
+			final long estimatedTime = (long) (startTime + category.getTargetHour() * 3600000 - totalToday);
 			return DateTimeUtil.formatTime(estimatedTime).toString();
 		}
 	}

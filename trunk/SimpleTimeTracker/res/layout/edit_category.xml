@@ -14,7 +14,8 @@
         android:id="@+id/edit_time_category_name_field"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:capitalize="words" >
+        android:capitalize="words"
+        android:inputType="text" >
     </EditText>
 
     <TextView
@@ -27,7 +28,8 @@
         android:id="@+id/edit_time_category_desc_field"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:capitalize="sentences" >
+        android:capitalize="sentences"
+        android:inputType="text" >
     </EditText>
 
     <TextView
@@ -39,7 +41,7 @@
         android:id="@+id/edit_target_hours_field"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:inputType="number" >
+        android:inputType="numberDecimal" >
     </EditText>
 
     <LinearLayout

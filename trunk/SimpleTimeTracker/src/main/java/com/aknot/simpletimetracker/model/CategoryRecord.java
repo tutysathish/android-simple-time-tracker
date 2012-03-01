@@ -9,6 +9,8 @@ import com.aknot.simpletimetracker.R;
 import com.aknot.simpletimetracker.database.CategoryDBAdapter;
 
 /**
+ * Record to store a category.
+ * 
  * @author Aknot
  */
 public final class CategoryRecord implements Serializable, Comparable<CategoryRecord> {
@@ -19,7 +21,7 @@ public final class CategoryRecord implements Serializable, Comparable<CategoryRe
 
 	private String categoryName;
 	private String description;
-	private int targetHour;
+	private double targetHour;
 
 	public int getRowId() {
 		return rowId;
@@ -51,11 +53,11 @@ public final class CategoryRecord implements Serializable, Comparable<CategoryRe
 		this.description = description;
 	}
 
-	public int getTargetHour() {
+	public double getTargetHour() {
 		return targetHour;
 	}
 
-	public void setTargetHour(final int targetHour) {
+	public void setTargetHour(final double targetHour) {
 		this.targetHour = targetHour;
 	}
 

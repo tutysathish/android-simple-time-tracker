@@ -122,13 +122,13 @@ public final class TimerActivity extends Activity {
 	}
 
 	public void saveTimer(final TimerRecord timerToSave) {
-		 chronometer.stop();
-		 long newElapsedTime = SystemClock.elapsedRealtime() - (System.currentTimeMillis() - timerToSave.getStartTime());
-		 sessionData.setPunchInBase(newElapsedTime);
-		 chronometer.setBase(newElapsedTime);
-		 chronometer.start();
-		 setupScreenLabels();
-		 saveState();
+		chronometer.stop();
+		final long newElapsedTime = SystemClock.elapsedRealtime() - (System.currentTimeMillis() - timerToSave.getStartTime());
+		sessionData.setPunchInBase(newElapsedTime);
+		chronometer.setBase(newElapsedTime);
+		chronometer.start();
+		setupScreenLabels();
+		saveState();
 	}
 
 	private void checkInCategory() {
@@ -198,11 +198,11 @@ public final class TimerActivity extends Activity {
 				final TextView weekViewChronOutput = (TextView) findViewById(R.id.weekViewChronOutput);
 				weekViewChronOutput.setText("Week : " + DateTimeUtil.hrColMinColSec(weekElapsed, false));
 				// Progress Bar
-				final int targetHour = sessionData.getCurrentTimerRecord().getCategory().getTargetHour();
+				final double targetHour = sessionData.getCurrentTimerRecord().getCategory().getTargetHour();
 				if (targetHour == 0) {
 					progressBar.setProgress(100);
 				} else {
-					final long progressTarget = targetHour * 3600000;
+					final long progressTarget = (long) (targetHour * 3600000);
 					progressBar.setProgress((int) (todayElapsed * 100 / progressTarget));
 				}
 

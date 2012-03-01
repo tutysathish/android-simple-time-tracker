@@ -13,7 +13,7 @@ import android.util.Log;
  */
 public final class DatabaseOpenHelper extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 
 	public static final String CATEGORY_TABLE = "stt_category";
 	public static final String TIMER_TABLE = "stt_timer";
@@ -51,11 +51,19 @@ public final class DatabaseOpenHelper extends SQLiteOpenHelper {
 		if (oldVersion < 2) {
 			upgradeToVersion2(db);
 		}
+		if (oldVersion < 3) {
+			upgradeToVersion3(db);
+		}
 	}
 
 	private void upgradeToVersion2(final SQLiteDatabase db) {
 		db.execSQL("ALTER TABLE " + CATEGORY_TABLE + " ADD COLUMN target_hour integer");
 		Log.i(this.getClass().toString(), "Upgraded table (col target_hour added) : " + TIMER_TABLE);
+	}
+
+	private void upgradeToVersion3(final SQLiteDatabase db) {
+		db.execSQL("ALTER TABLE " + CATEGORY_TABLE + " ADD COLUMN targeted_hour real");
+		Log.i(this.getClass().toString(), "Upgraded table (col targeted_hour added) : " + TIMER_TABLE);
 	}
 
 }

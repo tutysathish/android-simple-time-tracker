@@ -88,7 +88,7 @@ public final class SummaryActivity extends Activity {
 
 		final TextView targetHour = (TextView) findViewById(R.id.tvTargetHour);
 		if (category != null) {
-			targetHour.setText("Target : " + intToText(category.getTargetHour()));
+			targetHour.setText("Target : " + doubleToText(category.getTargetHour()));
 		} else {
 			targetHour.setText("Target :");
 		}
@@ -146,14 +146,14 @@ public final class SummaryActivity extends Activity {
 		return summaries;
 	}
 
-	private String intToText(final int hours) {
+	private String doubleToText(final double d) {
 		String hoursWord;
-		if (hours == 1 || hours == 0) {
+		if (d == 1 || d == 0) {
 			hoursWord = "hour";
 		} else {
 			hoursWord = "hours";
 		}
-		return hours + " " + hoursWord;
+		return d + " " + hoursWord;
 	}
 
 	private String timeInMillisToText(final long totalTimeInMillis) {

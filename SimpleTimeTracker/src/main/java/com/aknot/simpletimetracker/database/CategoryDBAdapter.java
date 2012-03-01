@@ -74,7 +74,7 @@ public final class CategoryDBAdapter {
 		columns.add("_id");
 		columns.add("category_name");
 		columns.add("description");
-		columns.add("target_hour");
+		columns.add("targeted_hour");
 		return columns.toArray(new String[0]);
 	}
 
@@ -82,7 +82,7 @@ public final class CategoryDBAdapter {
 		final ContentValues values = new ContentValues();
 		values.put("category_name", category.getCategoryName());
 		values.put("description", category.getDescription());
-		values.put("target_hour", category.getTargetHour());
+		values.put("targeted_hour", category.getTargetHour());
 		return values;
 	}
 
@@ -92,7 +92,7 @@ public final class CategoryDBAdapter {
 			category.setRowId(cursor.getInt(cursor.getColumnIndexOrThrow("_id")));
 			category.setCategoryName(cursor.getString(cursor.getColumnIndex("category_name")));
 			category.setDescription(cursor.getString(cursor.getColumnIndex("description")));
-			category.setTargetHour(cursor.getInt(cursor.getColumnIndex("target_hour")));
+			category.setTargetHour(cursor.getDouble(cursor.getColumnIndex("targeted_hour")));
 		}
 		return category;
 	}

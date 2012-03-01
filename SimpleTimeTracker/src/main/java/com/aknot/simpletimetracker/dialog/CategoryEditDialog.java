@@ -44,7 +44,7 @@ public class CategoryEditDialog extends Dialog {
 			public void onClick(final View view) {
 				currentCategory.setCategoryName(catNameField.getText().toString());
 				currentCategory.setDescription(catDescField.getText().toString());
-				currentCategory.setTargetHour(Integer.valueOf(catTargetField.getText().toString()));
+				currentCategory.setTargetHour(Double.valueOf(catTargetField.getText().toString()));
 				categoryActivity.onEditDialogSave(currentCategory);
 				dismiss();
 			}

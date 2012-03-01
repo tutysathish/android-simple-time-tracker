@@ -77,6 +77,9 @@ public class ExpandableReportAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public int getChildrenCount(final int groupPosition) {
+		if (children.keySet().size() == 0) {
+			return 0;
+		}
 		final String key = (String) children.keySet().toArray()[groupPosition];
 		return children.get(key).size();
 	}

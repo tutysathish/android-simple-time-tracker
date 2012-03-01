@@ -20,8 +20,8 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpletTimeTracker</connection>
-		<developerConnection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpletTimeTracker</developerConnection>
+		<connection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpleTimeTracker</connection>
+		<developerConnection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpleTimeTracker</developerConnection>
 	</scm>
 
 	<build>

@@ -7,7 +7,7 @@
 	<packaging>apk</packaging>
 
 	<properties>
-		<sdk.path>${env.ANDROID_SDK_HOME}</sdk.path>
+		<android.sdk.path>${env.ANDROID_SDK_HOME}</android.sdk.path>
 	</properties>
 
 	<dependencies>
@@ -29,14 +29,13 @@
 			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 				<artifactId>android-maven-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>3.1.1</version>
 				<configuration>
 					<androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
 					<assetsDirectory>${project.basedir}/assets</assetsDirectory>
 					<resourceDirectory>${project.basedir}/res</resourceDirectory>
 					<nativeLibrariesDirectory>${project.basedir}/src/main/native</nativeLibrariesDirectory>
 					<sdk>
-						<path>${sdk.path}</path>
 						<platform>7</platform>
 					</sdk>
 					<deleteConflictingFiles>true</deleteConflictingFiles>

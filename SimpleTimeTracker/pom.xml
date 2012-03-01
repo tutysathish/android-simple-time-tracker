@@ -3,7 +3,7 @@
 	<groupId>com.aknot</groupId>
 	<artifactId>SimpletTimeTracker</artifactId>
 	<name>${project.artifactId}</name>
-	<version>1.2</version>
+	<version>1.2-SNAPSHOT</version>
 	<packaging>apk</packaging>
 
 	<properties>
@@ -20,8 +20,8 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/tags/SimpletTimeTracker-1.2</connection>
-		<developerConnection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/tags/SimpletTimeTracker-1.2</developerConnection>
+		<connection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpletTimeTracker</connection>
+		<developerConnection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpletTimeTracker</developerConnection>
 	</scm>
 
 	<build>

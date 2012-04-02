@@ -18,22 +18,22 @@
 			<version>2.2.1</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>android.support</groupId>
-			<artifactId>compatibility-v4</artifactId>
-			<version>r4</version>
-		</dependency>
 <!-- 		<dependency> -->
-<!-- 			<groupId>com.actionbarsherlock</groupId> -->
-<!-- 			<artifactId>library</artifactId> -->
-<!-- 			<version>4.0.0</version> -->
-<!-- 			<type>apklib</type> -->
+<!-- 			<groupId>android.support</groupId> -->
+<!-- 			<artifactId>compatibility-v4</artifactId> -->
+<!-- 			<version>r4</version> -->
 <!-- 		</dependency> -->
+		<dependency>
+			<groupId>com.actionbarsherlock</groupId>
+			<artifactId>library</artifactId>
+			<version>4.0.0</version>
+			<type>apklib</type>
+		</dependency>
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpleTimeTracker</connection>
-		<developerConnection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/SimpleTimeTracker</developerConnection>
+		<connection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/DesignTemplate</connection>
+		<developerConnection>scm:svn:https://android-simple-time-tracker.googlecode.com/svn/trunk/DesignTemplate</developerConnection>
 	</scm>
 
 	<build>

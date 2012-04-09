@@ -3,6 +3,9 @@
 
     <string name="app_name">SimpleTimeTracker</string>
     <string name="database_name">time_tracker</string>
+    
+    <!-- Dummy -->
+    <string name="dummy">Dummy</string>
 
     <!-- Main activity -->
     <string name="main_label">SimpleTimeTracker</string>
@@ -40,6 +43,7 @@
 
     <!-- Timer Edit Activity -->
     <string name="category_prompt">Select Category</string>
+    <string name="activity_prompt">Activity:</string>
 
     <!-- Default Categories -->
     <string-array name="default_categories">

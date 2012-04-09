@@ -32,7 +32,7 @@ public final class CategoriesDialog extends Dialog {
 	public CategoriesDialog(Context context, int style) {
 		super(context, style);
 		categories = new ListView(context);
-		categories.setAdapter(CategoryAdapter.getCategoryAdapterFromDB(context, R.layout.categories, false));
+		categories.setAdapter(CategoryAdapter.getCategoryAdapterFromDB(context, R.layout.check_in_categories, false));
 		LinearLayout contentView = new LinearLayout(context);
 		contentView.setOrientation(LinearLayout.VERTICAL);
 		contentView.addView(categories);

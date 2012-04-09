@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 import com.aknot.simpletimetracker.R;
-import com.aknot.simpletimetracker.activity.adapter.PagerAdapter;
+import com.aknot.simpletimetracker.adapter.PagerAdapter;
 import com.aknot.simpletimetracker.fragment.ReportFragment;
 import com.aknot.simpletimetracker.fragment.SummaryFragment;
 import com.aknot.simpletimetracker.fragment.TimerFragment;

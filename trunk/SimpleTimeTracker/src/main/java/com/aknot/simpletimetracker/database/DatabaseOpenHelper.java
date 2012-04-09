@@ -33,13 +33,16 @@ public final class DatabaseOpenHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(final SQLiteDatabase db) {
-		db.execSQL("CREATE TABLE " + CATEGORY_TABLE + " (_id integer primary key autoincrement, " + "category_name text, description text)");
+		db.execSQL("CREATE TABLE " + CATEGORY_TABLE + " (_id integer primary key autoincrement, "
+				+ "category_name text, description text)");
 		Log.i(this.getClass().toString(), "Created table : " + CATEGORY_TABLE);
 
-		db.execSQL("CREATE TABLE " + TIMER_TABLE + " (_id integer primary key autoincrement, " + "category_id integer, start_time date, end_time date)");
+		db.execSQL("CREATE TABLE " + TIMER_TABLE + " (_id integer primary key autoincrement, "
+				+ "category_id integer, start_time date, end_time date)");
 		Log.i(this.getClass().toString(), "Created table : " + TIMER_TABLE);
 
 		upgradeToVersion2(db);
+		upgradeToVersion3(db);
 	}
 
 	/**

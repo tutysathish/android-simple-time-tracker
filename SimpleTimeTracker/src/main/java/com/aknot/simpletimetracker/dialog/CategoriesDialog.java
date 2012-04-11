@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.aknot.simpletimetracker.R;
-import com.aknot.simpletimetracker.activity.TimerActivity;
+import com.aknot.simpletimetracker.fragment.TimerFragment;
 import com.aknot.simpletimetracker.model.CategoryAdapter;
 import com.aknot.simpletimetracker.model.CategoryRecord;
 
@@ -44,7 +44,7 @@ public final class CategoriesDialog extends Dialog {
 	 * 
 	 * @param callback
 	 */
-	public void setCallback(final TimerActivity callback) {
+	public void setCallback(final TimerFragment callback) {
 		categories.setOnItemClickListener(new OnItemClickListener() {
 
 			/**

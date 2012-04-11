@@ -13,25 +13,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aknot.simpletimetracker.R;
-import com.aknot.simpletimetracker.activity.ReportActivity;
+import com.aknot.simpletimetracker.fragment.ReportFragment;
 import com.aknot.simpletimetracker.model.TimerRecord;
 
 public class ExpandableReportAdapter extends BaseExpandableListAdapter {
 
 	private final LayoutInflater inflater;
-	private final ReportActivity reportActivity;
+	private final ReportFragment reportFragment;
 
 	private final Map<String, List<TimerRecord>> children;
 
 	private String lastStartDate;
 
-	public ExpandableReportAdapter(final ReportActivity reportActivity, final Map<String, List<TimerRecord>> mapTimerRecords) {
+	public ExpandableReportAdapter(final ReportFragment reportFragment,
+			final Map<String, List<TimerRecord>> mapTimerRecords) {
 		// Create the children
 		children = mapTimerRecords;
 		// Get inflater
-		inflater = LayoutInflater.from(reportActivity);
+		inflater = LayoutInflater.from(reportFragment.getActivity());
 		// Get the activity
-		this.reportActivity = reportActivity;
+		this.reportFragment = reportFragment;
 	}
 
 	@Override
@@ -46,7 +47,8 @@ public class ExpandableReportAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public View getChildView(final int groupPosition, final int childPosition, final boolean isLastChild, final View convertView, final ViewGroup parent) {
+	public View getChildView(final int groupPosition, final int childPosition, final boolean isLastChild,
+			final View convertView, final ViewGroup parent) {
 		View childView;
 		if (convertView == null) {
 			childView = inflater.inflate(R.layout.report_child, parent, false);
@@ -100,7 +102,8 @@ public class ExpandableReportAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public View getGroupView(final int groupPosition, final boolean isExpanded, final View convertView, final ViewGroup parent) {
+	public View getGroupView(final int groupPosition, final boolean isExpanded, final View convertView,
+			final ViewGroup parent) {
 		View groupView;
 		if (convertView == null) {
 			groupView = inflater.inflate(R.layout.report_group, parent, false);
@@ -138,7 +141,7 @@ public class ExpandableReportAdapter extends BaseExpandableListAdapter {
 		textView.setTextColor(Color.GREEN);
 		textView.setTag("Header");
 
-		reportActivity.registerForContextMenu(textView);
+		reportFragment.registerForContextMenu(textView);
 
 		return textView;
 	}
@@ -152,9 +155,9 @@ public class ExpandableReportAdapter extends BaseExpandableListAdapter {
 		textView.setText(reportText.toString(), TextView.BufferType.SPANNABLE);
 		textView.setTag("Detail");
 
-		reportActivity.getRowToTimerRecordRowIdMap().put(textView, timerRecord.getRowId());
+		reportFragment.getRowToTimerRecordRowIdMap().put(textView, timerRecord.getRowId());
 
-		reportActivity.registerForContextMenu(textView);
+		reportFragment.registerForContextMenu(textView);
 
 		return textView;
 	}

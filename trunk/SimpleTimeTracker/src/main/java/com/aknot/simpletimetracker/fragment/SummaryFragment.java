@@ -8,7 +8,6 @@ import java.util.TreeMap;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ import com.aknot.simpletimetracker.model.CategoryRecord;
 import com.aknot.simpletimetracker.model.TimerRecord;
 import com.aknot.simpletimetracker.utils.DateTimeUtil;
 
-public class SummaryFragment extends Fragment {
+public class SummaryFragment extends AbstractFragment {
 
 	private final TimerDBAdapter timerDBAdapter = new TimerDBAdapter(this.getActivity());
 
@@ -83,6 +82,11 @@ public class SummaryFragment extends Fragment {
 		}
 
 		fillInSummary((CategoryRecord) catSpinner.getSelectedItem());
+	}
+
+	@Override
+	public String getTitle() {
+		return getResources().getString(R.string.summary_title);
 	}
 
 	private void fillInSummary(final CategoryRecord categoryRecord) {

@@ -10,7 +10,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -26,7 +25,7 @@ import com.aknot.simpletimetracker.dialog.TimerEditDialog;
 import com.aknot.simpletimetracker.model.TimerRecord;
 import com.aknot.simpletimetracker.utils.DateTimeUtil;
 
-public class ReportFragment extends Fragment {
+public class ReportFragment extends AbstractFragment {
 
 	private final TimerDBAdapter timerDBAdapter = new TimerDBAdapter(this.getActivity());
 	private final Map<View, Integer> rowToTimerRecordRowIdMap = new HashMap<View, Integer>();
@@ -86,6 +85,11 @@ public class ReportFragment extends Fragment {
 		}
 	}
 
+	@Override
+	public String getTitle() {
+		return getResources().getString(R.string.report_title);
+	}
+
 	public void saveTimer(final TimerRecord timerToSave) {
 		if (timerToSave.getRowId() == TimerRecord.NEW_TIMER) {
 			timerDBAdapter.createTimer(timerToSave);
@@ -110,7 +114,7 @@ public class ReportFragment extends Fragment {
 			final List<TimerRecord> reportRows = entry.getValue();
 
 			final TextView headerTextView = new TextView(this.getActivity());
-			headerTextView.setText(entry.getKey());
+			headerTextView.setText("Week : " + entry.getKey());
 			headerTextView.setTextColor(Color.GREEN);
 
 			linearLayout.addView(headerTextView);
@@ -118,12 +122,11 @@ public class ReportFragment extends Fragment {
 			for (final TimerRecord rowCaption : reportRows) {
 				final long totalTimeInMillis = rowCaption.getDurationInMilliseconds();
 				final TextView rowTextView = new TextView(this.getActivity());
-				rowTextView.setText("    " + rowCaption.getTitle() + ": "
+				rowTextView.setText("    " + rowCaption.getStartDateStr() + ": "
 						+ DateTimeUtil.timeInMillisToText(totalTimeInMillis));
 				linearLayout.addView(rowTextView);
 			}
 		}
-
 	}
 
 	private void showTimerDialog(final int rowId, final long date) {

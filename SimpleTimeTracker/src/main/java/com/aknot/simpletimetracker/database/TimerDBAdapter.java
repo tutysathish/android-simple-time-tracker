@@ -27,12 +27,13 @@ public final class TimerDBAdapter {
 	}
 
 	public long createTimer(final TimerRecord timerRecord) {
-		return DatabaseInstance.getDatabase().insert(DatabaseOpenHelper.TIMER_TABLE, null, timerRecordContentValuesList(timerRecord));
+		return DatabaseInstance.getDatabase().insert(DatabaseOpenHelper.TIMER_TABLE, null,
+				timerRecordContentValuesList(timerRecord));
 	}
 
 	public long updateTimer(final TimerRecord timerRecord) {
-		return DatabaseInstance.getDatabase().update(DatabaseOpenHelper.TIMER_TABLE, timerRecordContentValuesList(timerRecord),
-				"_id = " + timerRecord.getRowId(), null);
+		return DatabaseInstance.getDatabase().update(DatabaseOpenHelper.TIMER_TABLE,
+				timerRecordContentValuesList(timerRecord), "_id = " + timerRecord.getRowId(), null);
 	}
 
 	public boolean delete(final long rowId) {
@@ -47,13 +48,14 @@ public final class TimerDBAdapter {
 	public boolean deleteForDateRange(final long startDate, final long endDate) {
 		Log.d("DEBUG_QUERY", "Start Time : " + DateTimeUtil.getDateForMillis(startDate));
 		Log.d("DEBUG_QUERY", "End Time : " + DateTimeUtil.getDateForMillis(endDate));
-		return DatabaseInstance.getDatabase().delete(DatabaseOpenHelper.TIMER_TABLE, "start_time>=" + startDate + " and start_time <=" + endDate, null) > 0;
+		return DatabaseInstance.getDatabase().delete(DatabaseOpenHelper.TIMER_TABLE,
+				"start_time>=" + startDate + " and start_time <=" + endDate, null) > 0;
 	}
 
 	public TimerRecord fetchByRowID(final long rowId) throws SQLException {
 		Log.d("DEBUG_QUERY", "Row id : " + rowId);
-		final Cursor cursor = DatabaseInstance.getDatabase().query(true, DatabaseOpenHelper.TIMER_TABLE, columnList(), "_id=" + rowId, null, null, null, null,
-				null);
+		final Cursor cursor = DatabaseInstance.getDatabase().query(true, DatabaseOpenHelper.TIMER_TABLE, columnList(),
+				"_id=" + rowId, null, null, null, null, null);
 		if (cursor != null) {
 			cursor.moveToFirst();
 		}
@@ -65,7 +67,8 @@ public final class TimerDBAdapter {
 	public List<TimerRecord> fetchLastTimerRecordsByCategory(final int categoryId) {
 		final List<TimerRecord> result = new ArrayList<TimerRecord>();
 		final Cursor cursor = DatabaseInstance.getDatabase().query(DatabaseOpenHelper.TIMER_TABLE, columnList(),
-				"start_time >= " + DateTimeUtil.getMinTimeMillisWeek() + " and category_id = " + categoryId, null, null, null, "start_time desc");
+				"start_time >= " + DateTimeUtil.getMinTimeMillisWeek() + " and category_id = " + categoryId, null,
+				null, null, "start_time desc");
 		while (cursor.moveToNext()) {
 			result.add(fillTimerRecordFromCursor(cursor));
 		}
@@ -79,7 +82,8 @@ public final class TimerDBAdapter {
 		String cursorWeek = "";
 		List<TimerRecord> result = null;
 
-		final Cursor cursor = DatabaseInstance.getDatabase().query(DatabaseOpenHelper.TIMER_TABLE, columnList(), null, null, null, null, "start_time desc");
+		final Cursor cursor = DatabaseInstance.getDatabase().query(DatabaseOpenHelper.TIMER_TABLE, columnList(), null,
+				null, null, null, "start_time desc");
 		while (cursor.moveToNext()) {
 			final String currentWeek = DateTimeUtil.getWeek(cursor.getLong(cursor.getColumnIndexOrThrow("start_time")));
 			if (!cursorWeek.equals(currentWeek)) {
@@ -96,11 +100,13 @@ public final class TimerDBAdapter {
 	}
 
 	public long totalForTodayAndByCategory(final CategoryRecord category) {
-		return totalByRangeByCategory(DateTimeUtil.getMinTimeMillisToday(), DateTimeUtil.getMaxTimeMillisToday(), category.getRowId());
+		return totalByRangeByCategory(DateTimeUtil.getMinTimeMillisToday(), DateTimeUtil.getMaxTimeMillisToday(),
+				category.getRowId());
 	}
 
 	public long totalForWeekAndByCategory(final CategoryRecord category) {
-		return totalByRangeByCategory(DateTimeUtil.getMinTimeMillisWeek(), DateTimeUtil.getMaxTimeMillisToday(), category.getRowId());
+		return totalByRangeByCategory(DateTimeUtil.getMinTimeMillisWeek(), DateTimeUtil.getMaxTimeMillisToday(),
+				category.getRowId());
 	}
 
 	private long totalByRangeByCategory(final long startTime, final long endTime, final int categoryRowId) {
@@ -111,7 +117,8 @@ public final class TimerDBAdapter {
 		long totalMillisForCategory = 0;
 		while (cursor.moveToNext()) {
 			if (cursor.getInt(cursor.getColumnIndexOrThrow("category_id")) == categoryRowId) {
-				totalMillisForCategory += cursor.getLong(cursor.getColumnIndexOrThrow("end_time")) - cursor.getLong(cursor.getColumnIndexOrThrow("start_time"));
+				totalMillisForCategory += cursor.getLong(cursor.getColumnIndexOrThrow("end_time"))
+						- cursor.getLong(cursor.getColumnIndexOrThrow("start_time"));
 			}
 		}
 		cursor.close();
@@ -123,7 +130,8 @@ public final class TimerDBAdapter {
 		timerRecord.setRowId(cursor.getInt(cursor.getColumnIndexOrThrow("_id")));
 		timerRecord.setStartTime(cursor.getLong(cursor.getColumnIndexOrThrow("start_time")));
 		timerRecord.setEndTime(cursor.getLong(cursor.getColumnIndexOrThrow("end_time")));
-		timerRecord.setCategory(categoryDBAdapter.fetchByRowID(cursor.getInt(cursor.getColumnIndexOrThrow("category_id"))));
+		timerRecord.setCategory(categoryDBAdapter.fetchByRowID(cursor.getInt(cursor
+				.getColumnIndexOrThrow("category_id"))));
 		return timerRecord;
 	}
 
@@ -145,8 +153,8 @@ public final class TimerDBAdapter {
 	}
 
 	public boolean categoryHasTimerRecord(final CategoryRecord category) throws SQLException {
-		final Cursor cursor = DatabaseInstance.getDatabase().query(true, DatabaseOpenHelper.TIMER_TABLE, columnList(), "category_id=" + category.getRowId(),
-				null, null, null, null, null);
+		final Cursor cursor = DatabaseInstance.getDatabase().query(true, DatabaseOpenHelper.TIMER_TABLE, columnList(),
+				"category_id=" + category.getRowId(), null, null, null, null, null);
 		final boolean hasTimer = false;
 		if (cursor.moveToNext()) {
 			return true;
@@ -154,5 +162,4 @@ public final class TimerDBAdapter {
 		cursor.close();
 		return hasTimer;
 	}
-
 }

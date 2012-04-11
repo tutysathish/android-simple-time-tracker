@@ -115,15 +115,22 @@ public class ReportFragment extends AbstractFragment {
 
 			final TextView headerTextView = new TextView(this.getActivity());
 			headerTextView.setText("Week : " + entry.getKey());
-			headerTextView.setTextColor(Color.GREEN);
+			headerTextView.setTextColor(Color.parseColor("#FF6899FF"));
 
 			linearLayout.addView(headerTextView);
 
+			String previousHeader = "";
 			for (final TimerRecord rowCaption : reportRows) {
-				final long totalTimeInMillis = rowCaption.getDurationInMilliseconds();
+				if (!previousHeader.equals(rowCaption.getStartDateStr())) {
+					final TextView rowTextView = new TextView(this.getActivity());
+					rowTextView.setText("    " + rowCaption.getStartDateStr());
+					rowTextView.setTextColor(Color.GREEN);
+					linearLayout.addView(rowTextView);
+					previousHeader = rowCaption.getStartDateStr();
+				}
+
 				final TextView rowTextView = new TextView(this.getActivity());
-				rowTextView.setText("    " + rowCaption.getStartDateStr() + ": "
-						+ DateTimeUtil.timeInMillisToText(totalTimeInMillis));
+				rowTextView.setText("        " + rowCaption.getTitleWithDuration());
 				linearLayout.addView(rowTextView);
 			}
 		}

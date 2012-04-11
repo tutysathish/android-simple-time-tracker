@@ -7,7 +7,6 @@ import java.io.ObjectOutputStream;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,7 @@ import com.aknot.simpletimetracker.model.TimerRecord;
 import com.aknot.simpletimetracker.utils.DateTimeUtil;
 import com.aknot.simpletimetracker.utils.SessionData;
 
-public class TimerFragment extends Fragment {
+public class TimerFragment extends AbstractFragment {
 
 	private Chronometer chronometer;
 	private ProgressBar progressBar;
@@ -60,6 +59,11 @@ public class TimerFragment extends Fragment {
 
 		restoreSession();
 		setupScreenLabels();
+	}
+
+	@Override
+	public String getTitle() {
+		return getResources().getString(R.string.timer_title);
 	}
 
 	private void setupButtons() {

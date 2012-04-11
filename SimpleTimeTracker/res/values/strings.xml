@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	<!-- Application -->
     <string name="app_name">SimpleTimeTracker</string>
     <string name="database_name">time_tracker</string>
     
@@ -8,25 +8,22 @@
     <string name="dummy">Dummy</string>
 
     <!-- Main activity -->
-    <string name="main_label">SimpleTimeTracker</string>
+    <string name="main_label">View Pager Activity</string>
     <string name="categories_label">Manage Categories</string>
 
     <!-- First tab : timer -->
-    <string name="timer_label">Timer</string>
-    <string name="timer_title">Main Timer</string>
+    <string name="timer_title">Timer</string>
     <string name="timer_button_in">In</string>
     <string name="timer_button_out">Out</string>
 
     <!-- Second tab : summary -->
-    <string name="summary_label">Summary</string>
-    <string name="summary_title">Timer Summary</string>
+    <string name="summary_title">Summary</string>
 
     <!-- Third tab : reports -->
+    <string name="report_title">Reports</string>
     <string name="main_no_items">No items</string>
     <string name="groupTitle">Groups</string>
     <string name="childTitle">Children</string>
-    <string name="report_label">Report</string>
-    <string name="report_title">Timer Report</string>
     <string name="menu_edit">Edit</string>
     <string name="menu_del">Delete</string>
     <string name="menu_add">Add</string>

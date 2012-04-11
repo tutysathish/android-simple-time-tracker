@@ -13,23 +13,31 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.aknot.simpletimetracker.R;
-import com.aknot.simpletimetracker.adapter.PagerAdapter;
+import com.aknot.simpletimetracker.adapter.ViewPagerAdapter;
 import com.aknot.simpletimetracker.database.DatabaseInstance;
+import com.aknot.simpletimetracker.fragment.AbstractFragment;
 import com.aknot.simpletimetracker.fragment.ReportFragment;
 import com.aknot.simpletimetracker.fragment.SummaryFragment;
 import com.aknot.simpletimetracker.fragment.TimerFragment;
 import com.aknot.simpletimetracker.indicator.TitlePageIndicator;
 
+/**
+ * 
+ * Main activity that handle fragments through a view pager.
+ * 
+ * @author aknot
+ * 
+ */
 public class ViewPagerActivity extends FragmentActivity {
 
-	private PagerAdapter mPagerAdapter;
+	private ViewPagerAdapter viewPagerAdapter;
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.view_pager);
 
-		// Initialize the database.
+		// Initialise the database.
 		DatabaseInstance.initialize(this);
 
 		initialisePaging();
@@ -37,15 +45,15 @@ public class ViewPagerActivity extends FragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
-		super.onCreateOptionsMenu(menu);
+		// Get the menu
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
-		// Call Menu activity
+		// Call category activity
 		final Intent intent = new Intent(this, CategoryActivity.class);
 		startActivity(intent);
 		return super.onOptionsItemSelected(item);
@@ -54,29 +62,33 @@ public class ViewPagerActivity extends FragmentActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+		// Close the database
 		DatabaseInstance.close();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		// re-open the database
 		DatabaseInstance.open();
 	}
 
+	/**
+	 * This method initialise the view pager and the title indicator.
+	 */
 	private void initialisePaging() {
-		final List<Fragment> fragments = new Vector<Fragment>();
+		final List<AbstractFragment> fragments = new Vector<AbstractFragment>();
 
-		fragments.add(Fragment.instantiate(this, SummaryFragment.class.getName()));
-		fragments.add(Fragment.instantiate(this, TimerFragment.class.getName()));
-		fragments.add(Fragment.instantiate(this, ReportFragment.class.getName()));
+		fragments.add((SummaryFragment) Fragment.instantiate(this, SummaryFragment.class.getName()));
+		fragments.add((TimerFragment) Fragment.instantiate(this, TimerFragment.class.getName()));
+		fragments.add((ReportFragment) Fragment.instantiate(this, ReportFragment.class.getName()));
 
-		this.mPagerAdapter = new PagerAdapter(super.getSupportFragmentManager(), fragments);
+		viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
 
-		final ViewPager pager = (ViewPager) super.findViewById(R.id.viewpager);
-		pager.setAdapter(this.mPagerAdapter);
+		final ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
+		pager.setAdapter(this.viewPagerAdapter);
 
-		final TitlePageIndicator indicator = (TitlePageIndicator) super.findViewById(R.id.indicator);
+		final TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
 		indicator.setViewPager(pager);
 	}
-
 }

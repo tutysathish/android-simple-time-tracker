@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,7 +99,7 @@ public class TimerFragment extends AbstractFragment {
 			}
 
 			sessionData.startTimer(selectedCategory);
-			sessionData.setPunchInBase(SystemClock.elapsedRealtime());
+			sessionData.setPunchInBase(System.currentTimeMillis());
 
 			chronometer.setBase(sessionData.getPunchInBase());
 			chronometer.start();
@@ -184,7 +183,7 @@ public class TimerFragment extends AbstractFragment {
 		chronometer.setOnChronometerTickListener(new OnChronometerTickListener() {
 			@Override
 			public void onChronometerTick(final Chronometer chronometer) {
-				final long tick = SystemClock.elapsedRealtime();
+				final long tick = System.currentTimeMillis();
 				final long elapsed = tick - sessionData.getPunchInBase();
 				// Main Timer
 				final TextView mainViewChronOutput = (TextView) getView().findViewById(R.id.mainViewChronOutput);
@@ -248,7 +247,7 @@ public class TimerFragment extends AbstractFragment {
 
 	public void saveTimer(final TimerRecord timerToSave) {
 		chronometer.stop();
-		final long newElapsedTime = SystemClock.elapsedRealtime()
+		final long newElapsedTime = System.currentTimeMillis()
 				- (System.currentTimeMillis() - timerToSave.getStartTime());
 		sessionData.setPunchInBase(newElapsedTime);
 		chronometer.setBase(newElapsedTime);

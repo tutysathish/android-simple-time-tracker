@@ -90,7 +90,8 @@ public class SummaryFragment extends Fragment {
 		final Map<String, Map<String, Long>> summaries = loadData(categoryRecord);
 
 		final TextView weekSummary = (TextView) getView().findViewById(R.id.tvWeekSummary);
-		weekSummary.setText("Week " + DateTimeUtil.getCurrentWeek() + " : " + timeInMillisToText(weekTimeElapsed));
+		weekSummary.setText("Week " + DateTimeUtil.getCurrentWeek() + " : "
+				+ DateTimeUtil.timeInMillisToText(weekTimeElapsed));
 
 		final TextView targetHour = (TextView) getView().findViewById(R.id.tvTargetHour);
 		if (category != null) {
@@ -114,7 +115,8 @@ public class SummaryFragment extends Fragment {
 			for (final Entry<String, Long> rowCaption : summaryRows.entrySet()) {
 				final long totalTimeInMillis = rowCaption.getValue();
 				final TextView rowTextView = new TextView(this.getActivity());
-				rowTextView.setText("    " + rowCaption.getKey() + ": " + timeInMillisToText(totalTimeInMillis));
+				rowTextView.setText("    " + rowCaption.getKey() + ": "
+						+ DateTimeUtil.timeInMillisToText(totalTimeInMillis));
 				linearLayout.addView(rowTextView);
 			}
 		}
@@ -161,23 +163,5 @@ public class SummaryFragment extends Fragment {
 			hoursWord = "hours";
 		}
 		return d + " " + hoursWord;
-	}
-
-	private String timeInMillisToText(final long totalTimeInMillis) {
-		final long minutes = (totalTimeInMillis / (1000 * 60)) % 60;
-		final long hours = totalTimeInMillis / (1000 * 60 * 60);
-		String hoursWord;
-		if (hours == 1 || hours == 0) {
-			hoursWord = "hour";
-		} else {
-			hoursWord = "hours";
-		}
-		String minutesWord;
-		if (minutes == 1 || minutes == 0) {
-			minutesWord = "minute";
-		} else {
-			minutesWord = "minutes";
-		}
-		return hours + " " + hoursWord + ", " + minutes + " " + minutesWord;
 	}
 }

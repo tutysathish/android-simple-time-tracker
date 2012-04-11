@@ -145,4 +145,22 @@ public final class DateTimeUtil {
 		return calendar.getTimeInMillis();
 	}
 
+	public static String timeInMillisToText(final long totalTimeInMillis) {
+		final long minutes = (totalTimeInMillis / (1000 * 60)) % 60;
+		final long hours = totalTimeInMillis / (1000 * 60 * 60);
+		String hoursWord;
+		if (hours == 1 || hours == 0) {
+			hoursWord = "hour";
+		} else {
+			hoursWord = "hours";
+		}
+		String minutesWord;
+		if (minutes == 1 || minutes == 0) {
+			minutesWord = "minute";
+		} else {
+			minutesWord = "minutes";
+		}
+		return hours + " " + hoursWord + ", " + minutes + " " + minutesWord;
+	}
+
 }

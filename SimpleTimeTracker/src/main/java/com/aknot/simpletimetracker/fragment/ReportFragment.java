@@ -2,10 +2,13 @@ package com.aknot.simpletimetracker.fragment;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
@@ -14,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aknot.simpletimetracker.R;
@@ -21,7 +25,6 @@ import com.aknot.simpletimetracker.database.TimerDBAdapter;
 import com.aknot.simpletimetracker.dialog.TimerEditDialog;
 import com.aknot.simpletimetracker.model.TimerRecord;
 import com.aknot.simpletimetracker.utils.DateTimeUtil;
-import com.aknot.simpletimetracker.widget.ExpandableReportAdapter;
 
 public class ReportFragment extends Fragment {
 
@@ -97,25 +100,29 @@ public class ReportFragment extends Fragment {
 	}
 
 	private void fillInReport() {
-		// Get the expandable adapter
-		final ExpandableReportAdapter reportAdapter = new ExpandableReportAdapter(this,
-				timerDBAdapter.fetchAllTimerRecordsByWeek());
-		// // Set this list adapter to the list view
-		// setListAdapter(reportAdapter);
-		// // Expand first group by default
-		// getExpandableListView().expandGroup(0);
-		// // Make expandable listener
-		// getExpandableListView().setOnGroupExpandListener(new OnGroupExpandListener() {
-		// @Override
-		// public void onGroupExpand(final int groupPosition) {
-		// final int len = reportAdapter.getGroupCount();
-		// for (int i = 0; i < len; i++) {
-		// if (i != groupPosition) {
-		// getExpandableListView().collapseGroup(i);
-		// }
-		// }
-		// }
-		// });
+
+		Map<String, List<TimerRecord>> allRecords = timerDBAdapter.fetchAllTimerRecordsByWeek();
+
+		final LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.linearLayoutReport);
+		linearLayout.removeAllViews();
+
+		for (final Entry<String, List<TimerRecord>> entry : allRecords.entrySet()) {
+			final List<TimerRecord> reportRows = entry.getValue();
+
+			final TextView headerTextView = new TextView(this.getActivity());
+			headerTextView.setText(entry.getKey());
+			headerTextView.setTextColor(Color.GREEN);
+
+			linearLayout.addView(headerTextView);
+
+			for (final TimerRecord rowCaption : reportRows) {
+				final long totalTimeInMillis = rowCaption.getDurationInMilliseconds();
+				final TextView rowTextView = new TextView(this.getActivity());
+				rowTextView.setText("    " + rowCaption.getTitle() + ": "
+						+ DateTimeUtil.timeInMillisToText(totalTimeInMillis));
+				linearLayout.addView(rowTextView);
+			}
+		}
 
 	}
 

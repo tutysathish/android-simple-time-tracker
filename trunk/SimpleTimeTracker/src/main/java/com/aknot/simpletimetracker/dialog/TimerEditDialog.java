@@ -12,9 +12,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.aknot.simpletimetracker.R;
-import com.aknot.simpletimetracker.activity.ReportActivity;
-import com.aknot.simpletimetracker.activity.TimerActivity;
 import com.aknot.simpletimetracker.database.TimerDBAdapter;
+import com.aknot.simpletimetracker.fragment.ReportFragment;
+import com.aknot.simpletimetracker.fragment.TimerFragment;
 import com.aknot.simpletimetracker.model.CategoryRecord;
 import com.aknot.simpletimetracker.model.TimerRecord;
 
@@ -35,24 +35,21 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 		super(context);
 	}
 
-	/** 
-	 * Build the timer edit dialog for the report activity.
-	 * @param rowId
-	 * @param date
-	 * @param reportActivity
-	 * @return TimerEditDialog
+	/**
+	 * Build the timer edit dialog for the report fragment.
 	 */
-	public TimerEditDialog buildEditDialog(final int rowId, final long date, final ReportActivity reportActivity) {
+	public TimerEditDialog buildEditDialog(final int rowId, final long date, final ReportFragment reportFragment) {
 		setContentView(R.layout.edit_timer);
 
 		final Spinner catSpinner = (Spinner) findViewById(R.id.spinnerEditCategory);
-		catSpinner.setAdapter(CategoryRecord.getCategoryAdapter(reportActivity));
+		catSpinner.setAdapter(CategoryRecord.getCategoryAdapter(reportFragment.getActivity()));
 
-		final TimerDBAdapter timerDBAdapter = new TimerDBAdapter(reportActivity);
+		final TimerDBAdapter timerDBAdapter = new TimerDBAdapter(reportFragment.getActivity());
 		if (rowId != TimerRecord.NEW_TIMER) {
 			timerRecord = timerDBAdapter.fetchByRowID(rowId);
 			for (int position = 0; position < catSpinner.getCount(); position++) {
-				if (((CategoryRecord) catSpinner.getItemAtPosition(position)).getRowId() == timerRecord.getCategory().getRowId()) {
+				if (((CategoryRecord) catSpinner.getItemAtPosition(position)).getRowId() == timerRecord.getCategory()
+						.getRowId()) {
 					catSpinner.setSelection(position);
 					break;
 				}
@@ -65,7 +62,7 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 			timerRecord.setRowId(TimerRecord.NEW_TIMER);
 		}
 
-		setupButton(catSpinner, reportActivity);
+		setupButton(catSpinner, reportFragment);
 
 		updateLabels();
 
@@ -73,27 +70,25 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 	}
 
 	/**
-	 * Build the timer edit dialog for the timer activity.
-	 * @param timerRecord
-	 * @param timerActivity
-	 * @return TimerEditDialog
+	 * Build the timer edit dialog for the timer fragment.
 	 */
-	public TimerEditDialog buildEditDialog(final TimerRecord timerRecord, final TimerActivity timerActivity) {
+	public TimerEditDialog buildEditDialog(final TimerRecord timerRecord, final TimerFragment timerFragment) {
 		setContentView(R.layout.edit_timer);
 
 		this.timerRecord = timerRecord;
 
 		final Spinner catSpinner = (Spinner) findViewById(R.id.spinnerEditCategory);
-		catSpinner.setAdapter(CategoryRecord.getCategoryAdapter(timerActivity));
-		
+		catSpinner.setAdapter(CategoryRecord.getCategoryAdapter(timerFragment.getActivity()));
+
 		for (int position = 0; position < catSpinner.getCount(); position++) {
-			if (((CategoryRecord) catSpinner.getItemAtPosition(position)).getRowId() == this.timerRecord.getCategory().getRowId()) {
+			if (((CategoryRecord) catSpinner.getItemAtPosition(position)).getRowId() == this.timerRecord.getCategory()
+					.getRowId()) {
 				catSpinner.setSelection(position);
 				break;
 			}
 		}
 
-		setupButton(catSpinner, timerActivity);
+		setupButton(catSpinner, timerFragment);
 
 		updateLabels();
 
@@ -111,13 +106,14 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 		}
 		updateLabels();
 	}
-	
+
 	/**
 	 * This method set the button in the edit dialog for the report activity.
+	 * 
 	 * @param catSpinner
 	 * @param reportActivity
 	 */
-	private void setupButton(final Spinner catSpinner, final ReportActivity reportActivity) {
+	private void setupButton(final Spinner catSpinner, final ReportFragment reportFragment) {
 		final TimePickerDialog.OnTimeSetListener listener = this;
 
 		inTimer = (Button) findViewById(R.id.EditTimeIn);
@@ -125,7 +121,8 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 			@Override
 			public void onClick(final View v) {
 				selectedTimeField = TimeFieldSelected.IN;
-				new TimePickerDialog(reportActivity, listener, timerRecord.getStartTimeComponent(Calendar.HOUR_OF_DAY), timerRecord
+				new TimePickerDialog(reportFragment.getActivity(), listener, timerRecord
+						.getStartTimeComponent(Calendar.HOUR_OF_DAY), timerRecord
 						.getStartTimeComponent(Calendar.MINUTE), false).show();
 			}
 		});
@@ -135,8 +132,9 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 			@Override
 			public void onClick(final View v) {
 				selectedTimeField = TimeFieldSelected.OUT;
-				new TimePickerDialog(reportActivity, listener, timerRecord.getEndTimeComponent(Calendar.HOUR_OF_DAY), timerRecord
-						.getEndTimeComponent(Calendar.MINUTE), false).show();
+				new TimePickerDialog(reportFragment.getActivity(), listener, timerRecord
+						.getEndTimeComponent(Calendar.HOUR_OF_DAY), timerRecord.getEndTimeComponent(Calendar.MINUTE),
+						false).show();
 			}
 		});
 
@@ -145,8 +143,8 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 			@Override
 			public void onClick(final View view) {
 				timerRecord.setCategory((CategoryRecord) catSpinner.getSelectedItem());
-				if (validate(reportActivity)) {
-					reportActivity.saveTimer(timerRecord);
+				if (validate(reportFragment)) {
+					reportFragment.saveTimer(timerRecord);
 				}
 				dismiss();
 			}
@@ -163,10 +161,11 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 
 	/**
 	 * This method set the button in the edit dialog for the timer activity.
+	 * 
 	 * @param catSpinner
 	 * @param timerActivity
 	 */
-	private void setupButton(final Spinner catSpinner, final TimerActivity timerActivity) {
+	private void setupButton(final Spinner catSpinner, final TimerFragment timerFragment) {
 		final TimePickerDialog.OnTimeSetListener listener = this;
 
 		inTimer = (Button) findViewById(R.id.EditTimeIn);
@@ -174,11 +173,12 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 			@Override
 			public void onClick(final View v) {
 				selectedTimeField = TimeFieldSelected.IN;
-				new TimePickerDialog(timerActivity, listener, timerRecord.getStartTimeComponent(Calendar.HOUR_OF_DAY), timerRecord
+				new TimePickerDialog(timerFragment.getActivity(), listener, timerRecord
+						.getStartTimeComponent(Calendar.HOUR_OF_DAY), timerRecord
 						.getStartTimeComponent(Calendar.MINUTE), false).show();
 			}
 		});
-		
+
 		outTimer = (Button) findViewById(R.id.EditTimeOut);
 
 		final Button saveButton = (Button) findViewById(R.id.ButtonSaveTimerRecord);
@@ -186,8 +186,8 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 			@Override
 			public void onClick(final View view) {
 				timerRecord.setCategory((CategoryRecord) catSpinner.getSelectedItem());
-				if (validate(timerActivity)) {
-					timerActivity.saveTimer(timerRecord);
+				if (validate(timerFragment)) {
+					timerFragment.saveTimer(timerRecord);
 				}
 				dismiss();
 			}
@@ -202,17 +202,19 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 		});
 	}
 
-	private boolean validate(final ReportActivity activity) {
+	private boolean validate(final ReportFragment reportFragment) {
 		if (timerRecord.getEndTime() < timerRecord.getStartTime()) {
-			Toast.makeText(activity, "Invalid input: end time must be after start time.", Toast.LENGTH_LONG).show();
+			Toast.makeText(reportFragment.getActivity(), "Invalid input: end time must be after start time.",
+					Toast.LENGTH_LONG).show();
 			return false;
 		}
 		return true;
 	}
-	
-	private boolean validate(final TimerActivity activity) {
+
+	private boolean validate(final TimerFragment timerFragment) {
 		if (timerRecord.getStartTime() > System.currentTimeMillis()) {
-			Toast.makeText(activity, "Invalid input: start time must be before current time.", Toast.LENGTH_LONG).show();
+			Toast.makeText(timerFragment.getActivity(), "Invalid input: start time must be before current time.",
+					Toast.LENGTH_LONG).show();
 			return false;
 		}
 		return true;

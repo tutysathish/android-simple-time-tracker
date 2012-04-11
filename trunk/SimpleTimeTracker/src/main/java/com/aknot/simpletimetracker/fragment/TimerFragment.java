@@ -3,6 +3,7 @@ package com.aknot.simpletimetracker.fragment;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aknot.simpletimetracker.R;
+import com.aknot.simpletimetracker.database.CategoryDBAdapter;
 import com.aknot.simpletimetracker.database.TimerDBAdapter;
 import com.aknot.simpletimetracker.dialog.CategoriesDialog;
 import com.aknot.simpletimetracker.dialog.TimerEditDialog;
@@ -83,6 +85,15 @@ public class TimerFragment extends AbstractFragment {
 	}
 
 	private void checkInCategory() {
+		CategoryDBAdapter categoryDBAdapter = new CategoryDBAdapter(this.getActivity());
+
+		List<CategoryRecord> fetchAllCategories = categoryDBAdapter.fetchAllCategories();
+
+		if (fetchAllCategories.size() == 1) {
+			checkIn(fetchAllCategories.get(0));
+			return;
+		}
+
 		final CategoriesDialog dialog = new CategoriesDialog(getActivity(), R.style.DialogStyle);
 		dialog.setCallback(this);
 		dialog.show();

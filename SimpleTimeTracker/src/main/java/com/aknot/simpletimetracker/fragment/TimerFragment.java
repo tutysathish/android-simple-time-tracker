@@ -64,7 +64,7 @@ public class TimerFragment extends AbstractFragment {
 
 	@Override
 	public String getTitle() {
-		return getResources().getString(R.string.timer_title);
+		return getString(R.string.timer_title);
 	}
 
 	private void setupButtons() {

@@ -53,7 +53,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
 	private ViewPager mViewPager;
 	private ViewPager.OnPageChangeListener mListener;
-	private TitleProvider mTitleProvider;
+	private PagerAdapter mAdapter;
 	private int mCurrentPage;
 	private int mCurrentOffset;
 	private int mScrollState;
@@ -380,13 +380,14 @@ public class TitlePageIndicator extends View implements PageIndicator {
 					// Fade out/in unselected text as the selected text fades in/out
 					mPaintText.setAlpha(colorTextAlpha - (int) (colorTextAlpha * selectedPercent));
 				}
-				canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom + mTopPadding, mPaintText);
+				canvas.drawText(mAdapter.getPageTitle(i).toString(), bound.left, bound.bottom + mTopPadding, mPaintText);
 
 				// If we are within the selected bounds draw the selected text
 				if (currentPage && currentSelected) {
 					mPaintText.setColor(mColorSelected);
 					mPaintText.setAlpha((int) ((mColorSelected >>> 24) * selectedPercent));
-					canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom + mTopPadding, mPaintText);
+					canvas.drawText(mAdapter.getPageTitle(i).toString(), bound.left, bound.bottom + mTopPadding,
+							mPaintText);
 				}
 			}
 		}
@@ -561,7 +562,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 	private RectF calcBounds(int index, Paint paint) {
 		// Calculate the text bounds
 		RectF bounds = new RectF();
-		bounds.right = paint.measureText(mTitleProvider.getTitle(index));
+		bounds.right = paint.measureText(mAdapter.getPageTitle(index).toString());
 		bounds.bottom = paint.descent() - paint.ascent();
 		return bounds;
 	}
@@ -569,16 +570,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
 	@Override
 	public void setViewPager(ViewPager view) {
 		final PagerAdapter adapter = view.getAdapter();
-		if (adapter == null) {
-			throw new IllegalStateException("ViewPager does not have adapter instance.");
-		}
-		if (!(adapter instanceof TitleProvider)) {
-			throw new IllegalStateException(
-					"ViewPager adapter must implement TitleProvider to be used with TitlePageIndicator.");
-		}
+
 		mViewPager = view;
 		mViewPager.setOnPageChangeListener(this);
-		mTitleProvider = (TitleProvider) adapter;
+		mAdapter = view.getAdapter();
 		invalidate();
 		setCurrentItem(1);
 	}

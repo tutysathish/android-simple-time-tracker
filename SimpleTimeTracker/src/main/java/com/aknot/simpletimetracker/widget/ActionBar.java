@@ -74,32 +74,14 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 		mTitleView.setText(resid);
 	}
 
-	/**
-	 * Set the enabled state of the progress bar.
-	 * 
-	 * @param One
-	 *            of {@link View#VISIBLE}, {@link View#INVISIBLE}, or {@link View#GONE}.
-	 */
 	public void setProgressBarVisibility(int visibility) {
 		mProgress.setVisibility(visibility);
 	}
 
-	/**
-	 * Returns the visibility status for the progress bar.
-	 * 
-	 * @param One
-	 *            of {@link View#VISIBLE}, {@link View#INVISIBLE}, or {@link View#GONE}.
-	 */
 	public int getProgressBarVisibility() {
 		return mProgress.getVisibility();
 	}
 
-	/**
-	 * Function to set a click listener for Title TextView
-	 * 
-	 * @param listener
-	 *            the onClickListener
-	 */
 	public void setOnTitleClickListener(OnClickListener listener) {
 		mTitleView.setOnClickListener(listener);
 	}
@@ -113,12 +95,6 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 		}
 	}
 
-	/**
-	 * Adds a list of {@link Action}s.
-	 * 
-	 * @param actionList
-	 *            the actions to add
-	 */
 	public void addActions(ActionList actionList) {
 		int actions = actionList.size();
 		for (int i = 0; i < actions; i++) {
@@ -126,52 +102,23 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 		}
 	}
 
-	/**
-	 * Adds a new {@link Action}.
-	 * 
-	 * @param action
-	 *            the action to add
-	 */
 	public void addAction(Action action) {
 		final int index = mActionsView.getChildCount();
 		addAction(action, index);
 	}
 
-	/**
-	 * Adds a new {@link Action} at the specified index.
-	 * 
-	 * @param action
-	 *            the action to add
-	 * @param index
-	 *            the position at which to add the action
-	 */
 	public void addAction(Action action, int index) {
 		mActionsView.addView(inflateAction(action), index);
 	}
 
-	/**
-	 * Removes all action views from this action bar
-	 */
 	public void removeAllActions() {
 		mActionsView.removeAllViews();
 	}
 
-	/**
-	 * Remove a action from the action bar.
-	 * 
-	 * @param index
-	 *            position of action to remove
-	 */
 	public void removeActionAt(int index) {
 		mActionsView.removeViewAt(index);
 	}
 
-	/**
-	 * Remove a action from the action bar.
-	 * 
-	 * @param action
-	 *            The action to remove
-	 */
 	public void removeAction(Action action) {
 		int childCount = mActionsView.getChildCount();
 		for (int i = 0; i < childCount; i++) {
@@ -185,22 +132,10 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 		}
 	}
 
-	/**
-	 * Returns the number of actions currently registered with the action bar.
-	 * 
-	 * @return action count
-	 */
 	public int getActionCount() {
 		return mActionsView.getChildCount();
 	}
 
-	/**
-	 * Inflates a {@link View} with the given {@link Action}.
-	 * 
-	 * @param action
-	 *            the action to inflate
-	 * @return a view
-	 */
 	private View inflateAction(Action action) {
 		View view = mInflater.inflate(R.layout.actionbar_item, mActionsView, false);
 

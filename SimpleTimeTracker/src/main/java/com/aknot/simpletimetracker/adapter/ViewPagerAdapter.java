@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.aknot.simpletimetracker.fragment.AbstractFragment;
-import com.aknot.simpletimetracker.indicator.TitleProvider;
 
 /**
  * 
@@ -15,7 +14,7 @@ import com.aknot.simpletimetracker.indicator.TitleProvider;
  * 
  * @author aknot
  */
-public class ViewPagerAdapter extends FragmentPagerAdapter implements TitleProvider {
+public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 	// List of all available fragments
 	private final List<AbstractFragment> fragments;
@@ -39,7 +38,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter implements TitleProvi
 	}
 
 	@Override
-	public String getTitle(int position) {
+	public CharSequence getPageTitle(int position) {
 		return fragments.get(position).getTitle();
 	}
+
 }

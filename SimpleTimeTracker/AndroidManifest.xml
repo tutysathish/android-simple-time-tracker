@@ -17,7 +17,7 @@
             android:name=".activity.ViewPagerActivity"
             android:label="@string/main_label"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:theme="@style/HoloTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

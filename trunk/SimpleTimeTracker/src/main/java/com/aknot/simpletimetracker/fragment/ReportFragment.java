@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -27,6 +28,9 @@ import com.aknot.simpletimetracker.utils.DateTimeUtil;
 
 public class ReportFragment extends AbstractFragment {
 
+	private static final String HEADER = "Header";
+	private static final String DETAIL = "Detail";
+
 	private final TimerDBAdapter timerDBAdapter = new TimerDBAdapter(this.getActivity());
 	private final Map<View, Integer> rowToTimerRecordRowIdMap = new HashMap<View, Integer>();
 
@@ -40,11 +44,6 @@ public class ReportFragment extends AbstractFragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-	}
-
-	@Override
 	public void onResume() {
 		super.onResume();
 		fillInReport();
@@ -53,15 +52,16 @@ public class ReportFragment extends AbstractFragment {
 	@Override
 	public void onCreateContextMenu(final ContextMenu menu, final View view, final ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, view, menuInfo);
-
-		if (view.getTag().equals("Detail")) {
-			menu.add(0, 1, 0, getString(R.string.menu_edit));
-			menu.add(0, 2, 0, getString(R.string.menu_del));
-			chosenRowId = rowToTimerRecordRowIdMap.get(view);
-		} else if (view.getTag().equals("Header")) {
-			menu.add(0, 3, 0, getString(R.string.menu_add));
-			menu.add(0, 4, 0, getString(R.string.menu_del));
-			dateSelected = (String) ((TextView) view).getText();
+		if (view.getTag() != null) {
+			if (view.getTag().equals(DETAIL)) {
+				menu.add(0, 1, 0, getString(R.string.menu_edit));
+				menu.add(0, 2, 0, getString(R.string.menu_del));
+				chosenRowId = rowToTimerRecordRowIdMap.get(view);
+			} else if (view.getTag().equals(HEADER)) {
+				menu.add(0, 3, 0, getString(R.string.menu_add));
+				menu.add(0, 4, 0, getString(R.string.menu_del));
+				dateSelected = (String) ((TextView) view).getText();
+			}
 		}
 	}
 
@@ -87,7 +87,7 @@ public class ReportFragment extends AbstractFragment {
 
 	@Override
 	public String getTitle() {
-		return getResources().getString(R.string.report_title);
+		return getString(R.string.report_title);
 	}
 
 	public void saveTimer(final TimerRecord timerToSave) {
@@ -97,10 +97,6 @@ public class ReportFragment extends AbstractFragment {
 			timerDBAdapter.updateTimer(timerToSave);
 		}
 		fillInReport();
-	}
-
-	public Map<View, Integer> getRowToTimerRecordRowIdMap() {
-		return rowToTimerRecordRowIdMap;
 	}
 
 	private void fillInReport() {
@@ -116,6 +112,7 @@ public class ReportFragment extends AbstractFragment {
 			final TextView headerTextView = new TextView(this.getActivity());
 			headerTextView.setText("Week : " + entry.getKey());
 			headerTextView.setTextColor(Color.parseColor("#FF6899FF"));
+			headerTextView.setTypeface(Typeface.DEFAULT_BOLD);
 
 			linearLayout.addView(headerTextView);
 
@@ -125,12 +122,17 @@ public class ReportFragment extends AbstractFragment {
 					final TextView rowTextView = new TextView(this.getActivity());
 					rowTextView.setText("    " + rowCaption.getStartDateStr());
 					rowTextView.setTextColor(Color.GREEN);
+					rowTextView.setTag(HEADER);
+					registerForContextMenu(rowTextView);
 					linearLayout.addView(rowTextView);
 					previousHeader = rowCaption.getStartDateStr();
 				}
 
 				final TextView rowTextView = new TextView(this.getActivity());
 				rowTextView.setText("        " + rowCaption.getTitleWithDuration());
+				rowTextView.setTag(DETAIL);
+				rowToTimerRecordRowIdMap.put(rowTextView, rowCaption.getRowId());
+				registerForContextMenu(rowTextView);
 				linearLayout.addView(rowTextView);
 			}
 		}

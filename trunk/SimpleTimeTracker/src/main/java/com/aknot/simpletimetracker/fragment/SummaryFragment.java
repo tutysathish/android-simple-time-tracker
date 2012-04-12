@@ -86,7 +86,7 @@ public class SummaryFragment extends AbstractFragment {
 
 	@Override
 	public String getTitle() {
-		return getResources().getString(R.string.summary_title);
+		return getString(R.string.summary_title);
 	}
 
 	private void fillInSummary(final CategoryRecord categoryRecord) {

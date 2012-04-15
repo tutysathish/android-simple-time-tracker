@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/groupLinearLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="32dp"
+    android:background="@drawable/group_backgroup" >
+
+    <TextView
+        android:id="@+id/tvGroup"
+        android:layout_width="fill_parent"
+        android:layout_height="22dp"
+        android:gravity="center_vertical|right"
+        android:paddingRight="10dp"
+        android:text="@string/groupTitle"
+        android:textColor="#ffffffff"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+</LinearLayout>

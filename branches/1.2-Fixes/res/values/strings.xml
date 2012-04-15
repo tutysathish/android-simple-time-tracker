@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SimpleTimeTracker</string>
+    <string name="database_name">time_tracker</string>
+
+    <!-- Main activity -->
+    <string name="main_label">SimpleTimeTracker</string>
+    <string name="categories_label">Manage Categories</string>
+
+    <!-- First tab : timer -->
+    <string name="timer_label">Timer</string>
+    <string name="timer_title">Main Timer</string>
+    <string name="timer_button_in">In</string>
+    <string name="timer_button_out">Out</string>
+
+    <!-- Second tab : summary -->
+    <string name="summary_label">Summary</string>
+    <string name="summary_title">Timer Summary</string>
+
+    <!-- Third tab : reports -->
+    <string name="main_no_items">No items</string>
+    <string name="groupTitle">Groups</string>
+    <string name="childTitle">Children</string>
+    <string name="report_label">Report</string>
+    <string name="report_title">Timer Report</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_del">Delete</string>
+    <string name="menu_add">Add</string>
+
+    <!-- Category activity -->
+    <string name="category_name_label">Category Name :</string>
+    <string name="category_descr_label">Category Description :</string>
+    <string name="category_target_label">Target Hour :</string>
+    <string name="category_save_button">Save</string>
+    <string name="category_cancel_buttton">Cancel</string>
+    <string name="category_menu_add">Create a new category</string>
+    <string name="category_menu_edit">Edit</string>
+    <string name="category_menu_del">Delete</string>
+
+    <!-- Timer Edit Activity -->
+    <string name="category_prompt">Select Category</string>
+
+    <!-- Default Categories -->
+    <string-array name="default_categories">
+        <item>Eating</item>
+        <item>Working</item>
+    </string-array>
+
+</resources>

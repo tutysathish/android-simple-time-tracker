@@ -3,6 +3,7 @@ package com.aknot.simpletimetracker.activity;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aknot.simpletimetracker.R;
+import com.aknot.simpletimetracker.database.CategoryDBAdapter;
 import com.aknot.simpletimetracker.database.TimerDBAdapter;
 import com.aknot.simpletimetracker.dialog.CategoriesDialog;
 import com.aknot.simpletimetracker.dialog.TimerEditDialog;
@@ -99,7 +101,8 @@ public final class TimerActivity extends Activity {
 		if (showTv) {
 			labelTv.setText("Time spent : " + sessionData.getCurrentTimerRecord().getCategory().getCategoryName());
 			tvStartTime.setText("Start time : " + sessionData.getCurrentTimerRecord().getStartTimeStr());
-			tvEndTime.setText("End time : " + sessionData.getCurrentTimerRecord().getEstimatedEndTimeStr(sessionData.getTodayBase()));
+			tvEndTime.setText("End time : "
+					+ sessionData.getCurrentTimerRecord().getEstimatedEndTimeStr(sessionData.getTodayBase()));
 		} else {
 			labelTv.setText("No current activity");
 			tvStartTime.setText("Start time : ");
@@ -123,7 +126,8 @@ public final class TimerActivity extends Activity {
 
 	public void saveTimer(final TimerRecord timerToSave) {
 		chronometer.stop();
-		final long newElapsedTime = SystemClock.elapsedRealtime() - (System.currentTimeMillis() - timerToSave.getStartTime());
+		final long newElapsedTime = SystemClock.elapsedRealtime()
+				- (System.currentTimeMillis() - timerToSave.getStartTime());
 		sessionData.setPunchInBase(newElapsedTime);
 		chronometer.setBase(newElapsedTime);
 		chronometer.start();
@@ -132,6 +136,15 @@ public final class TimerActivity extends Activity {
 	}
 
 	private void checkInCategory() {
+		CategoryDBAdapter categoryDBAdapter = new CategoryDBAdapter(this);
+
+		List<CategoryRecord> fetchAllCategories = categoryDBAdapter.fetchAllCategories();
+
+		if (fetchAllCategories.size() == 1) {
+			checkIn(fetchAllCategories.get(0));
+			return;
+		}
+
 		final CategoriesDialog dialog = new CategoriesDialog(this, R.style.DialogStyle);
 		dialog.setCallback(this);
 		dialog.show();
@@ -139,7 +152,8 @@ public final class TimerActivity extends Activity {
 
 	public void checkIn(final CategoryRecord selectedCategory) {
 		// If the category is the same, continue timer
-		if (((sessionData.getCategory() != null) && !sessionData.getCategory().equals(selectedCategory)) || sessionData.isPunchedOut()) {
+		if (((sessionData.getCategory() != null) && !sessionData.getCategory().equals(selectedCategory))
+				|| sessionData.isPunchedOut()) {
 
 			if (!sessionData.isPunchedOut()) {
 				sessionData.stopTimer();

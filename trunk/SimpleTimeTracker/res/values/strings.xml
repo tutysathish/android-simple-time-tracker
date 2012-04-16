@@ -8,7 +8,6 @@
     <string name="dummy">Dummy</string>
 
     <!-- Main activity -->
-    <string name="main_label">View Pager Activity</string>
     <string name="categories_label">Manage Categories</string>
 
     <!-- First tab : timer -->

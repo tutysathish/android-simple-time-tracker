@@ -8,7 +8,6 @@ import java.util.List;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -126,7 +125,7 @@ public final class TimerActivity extends Activity {
 
 	public void saveTimer(final TimerRecord timerToSave) {
 		chronometer.stop();
-		final long newElapsedTime = SystemClock.elapsedRealtime()
+		final long newElapsedTime = System.currentTimeMillis()
 				- (System.currentTimeMillis() - timerToSave.getStartTime());
 		sessionData.setPunchInBase(newElapsedTime);
 		chronometer.setBase(newElapsedTime);
@@ -161,7 +160,7 @@ public final class TimerActivity extends Activity {
 			}
 
 			sessionData.startTimer(selectedCategory);
-			sessionData.setPunchInBase(SystemClock.elapsedRealtime());
+			sessionData.setPunchInBase(System.currentTimeMillis());
 
 			chronometer.setBase(sessionData.getPunchInBase());
 			chronometer.start();
@@ -198,7 +197,7 @@ public final class TimerActivity extends Activity {
 		chronometer.setOnChronometerTickListener(new OnChronometerTickListener() {
 			@Override
 			public void onChronometerTick(final Chronometer chronometer) {
-				final long tick = SystemClock.elapsedRealtime();
+				final long tick = System.currentTimeMillis();
 				final long elapsed = tick - sessionData.getPunchInBase();
 				// Main Timer
 				final TextView mainViewChronOutput = (TextView) findViewById(R.id.mainViewChronOutput);

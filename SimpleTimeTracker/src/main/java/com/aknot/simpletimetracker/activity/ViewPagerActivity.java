@@ -48,7 +48,7 @@ public class ViewPagerActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		// Get the menu
-		MenuInflater inflater = getMenuInflater();
+		final MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -77,7 +77,7 @@ public class ViewPagerActivity extends FragmentActivity {
 
 	private void initialiseActionBar() {
 		final ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-		actionBar.setHomeLogo(R.drawable.action_bar_icon);
+		// actionBar.setHomeLogo(R.drawable.action_bar_icon);
 		actionBar.setTitle(getString(R.string.app_name));
 	}
 

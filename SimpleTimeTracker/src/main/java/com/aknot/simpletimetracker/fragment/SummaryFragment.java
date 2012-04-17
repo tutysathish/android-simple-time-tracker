@@ -39,7 +39,7 @@ public class SummaryFragment extends AbstractFragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewCreated(final View view, final Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
 		if (savedInstanceState != null) {
@@ -51,8 +51,7 @@ public class SummaryFragment extends AbstractFragment {
 		catSpinner.setAdapter(CategoryRecord.getCategoryAdapter(this.getActivity()));
 		catSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
-			public void onItemSelected(final AdapterView<?> parentView, final View selectedItemView,
-					final int position, final long id) {
+			public void onItemSelected(final AdapterView<?> parentView, final View selectedItemView, final int position, final long id) {
 				category = (CategoryRecord) catSpinner.getSelectedItem();
 				fillInSummary(category);
 			}
@@ -64,7 +63,7 @@ public class SummaryFragment extends AbstractFragment {
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putSerializable("category", category);
 	}
@@ -94,8 +93,7 @@ public class SummaryFragment extends AbstractFragment {
 		final Map<String, Map<String, Long>> summaries = loadData(categoryRecord);
 
 		final TextView weekSummary = (TextView) getView().findViewById(R.id.tvWeekSummary);
-		weekSummary.setText("Week " + DateTimeUtil.getCurrentWeek() + " : "
-				+ DateTimeUtil.timeInMillisToText(weekTimeElapsed));
+		weekSummary.setText("Week " + DateTimeUtil.getCurrentWeek() + " : " + DateTimeUtil.timeInMillisToText(weekTimeElapsed));
 
 		final TextView targetHour = (TextView) getView().findViewById(R.id.tvTargetHour);
 		if (category != null) {
@@ -119,16 +117,14 @@ public class SummaryFragment extends AbstractFragment {
 			for (final Entry<String, Long> rowCaption : summaryRows.entrySet()) {
 				final long totalTimeInMillis = rowCaption.getValue();
 				final TextView rowTextView = new TextView(this.getActivity());
-				rowTextView.setText("    " + rowCaption.getKey() + ": "
-						+ DateTimeUtil.timeInMillisToText(totalTimeInMillis));
+				rowTextView.setText("    " + rowCaption.getKey() + ": " + DateTimeUtil.timeInMillisToText(totalTimeInMillis));
 				linearLayout.addView(rowTextView);
 			}
 		}
 	}
 
 	private Map<String, Map<String, Long>> loadData(final CategoryRecord categoryRecord) {
-		final List<TimerRecord> timerRecords = timerDBAdapter
-				.fetchLastTimerRecordsByCategory(categoryRecord.getRowId());
+		final List<TimerRecord> timerRecords = timerDBAdapter.fetchLastTimerRecordsByCategory(categoryRecord.getRowId());
 
 		final Map<String, Map<String, Long>> summaries = new LinkedHashMap<String, Map<String, Long>>();
 

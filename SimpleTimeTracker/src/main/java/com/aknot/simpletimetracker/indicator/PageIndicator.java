@@ -7,11 +7,11 @@ import android.support.v4.view.ViewPager;
  */
 public interface PageIndicator extends ViewPager.OnPageChangeListener {
 
-	public void setViewPager(ViewPager view);
+	public void setViewPager(final ViewPager view, final int defaultPage);
 
-	public void setCurrentItem(int item);
+	public void setCurrentItem(final int item);
 
-	public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener);
+	public void setOnPageChangeListener(final ViewPager.OnPageChangeListener listener);
 
 	public void notifyDataSetChanged();
 }

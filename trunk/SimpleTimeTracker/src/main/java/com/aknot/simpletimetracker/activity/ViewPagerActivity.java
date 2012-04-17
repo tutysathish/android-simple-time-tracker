@@ -41,8 +41,8 @@ public class ViewPagerActivity extends FragmentActivity {
 		// Initialise the database.
 		DatabaseInstance.initialize(this);
 
-		initialiseActionBar();
-		initialisePaging();
+		initializeActionBar();
+		initializePaging();
 	}
 
 	@Override
@@ -75,16 +75,19 @@ public class ViewPagerActivity extends FragmentActivity {
 		DatabaseInstance.open();
 	}
 
-	private void initialiseActionBar() {
+	/**
+	 * This method initialize the action bar.
+	 */
+	private void initializeActionBar() {
 		final ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
 		// actionBar.setHomeLogo(R.drawable.action_bar_icon);
 		actionBar.setTitle(getString(R.string.app_name));
 	}
 
 	/**
-	 * This method initialise the view pager and the title indicator.
+	 * This method initialize the view pager and the title indicator.
 	 */
-	private void initialisePaging() {
+	private void initializePaging() {
 		final List<AbstractFragment> fragments = new Vector<AbstractFragment>();
 
 		fragments.add((SummaryFragment) Fragment.instantiate(this, SummaryFragment.class.getName()));
@@ -97,6 +100,6 @@ public class ViewPagerActivity extends FragmentActivity {
 		pager.setAdapter(this.viewPagerAdapter);
 
 		final TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
-		indicator.setViewPager(pager);
+		indicator.setViewPager(pager, 1);
 	}
 }

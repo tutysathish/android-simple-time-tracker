@@ -90,9 +90,17 @@ public class ViewPagerActivity extends FragmentActivity {
 	private void initializePaging() {
 		final List<AbstractFragment> fragments = new Vector<AbstractFragment>();
 
-		fragments.add((SummaryFragment) Fragment.instantiate(this, SummaryFragment.class.getName()));
-		fragments.add((TimerFragment) Fragment.instantiate(this, TimerFragment.class.getName()));
-		fragments.add((ReportFragment) Fragment.instantiate(this, ReportFragment.class.getName()));
+		final SummaryFragment summaryFragment = (SummaryFragment) Fragment.instantiate(this, SummaryFragment.class.getName());
+		final TimerFragment timerFragment = (TimerFragment) Fragment.instantiate(this, TimerFragment.class.getName());
+		final ReportFragment reportFragment = (ReportFragment) Fragment.instantiate(this, ReportFragment.class.getName());
+
+		summaryFragment.setTitle(getString(R.string.summary_title));
+		timerFragment.setTitle(getString(R.string.timer_title));
+		reportFragment.setTitle(getString(R.string.report_title));
+
+		fragments.add(summaryFragment);
+		fragments.add(timerFragment);
+		fragments.add(reportFragment);
 
 		viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
 

@@ -4,6 +4,18 @@ import android.support.v4.app.Fragment;
 
 public abstract class AbstractFragment extends Fragment {
 
-	public abstract String getTitle();
+	// Constant
+	private static final String EMPTY = "";
+
+	// Title of the fragment
+	private String title = EMPTY;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(final String title) {
+		this.title = title;
+	}
 
 }

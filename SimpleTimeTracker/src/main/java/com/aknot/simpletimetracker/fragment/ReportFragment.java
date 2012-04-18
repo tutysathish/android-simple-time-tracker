@@ -85,11 +85,6 @@ public class ReportFragment extends AbstractFragment {
 		}
 	}
 
-	@Override
-	public String getTitle() {
-		return getString(R.string.report_title);
-	}
-
 	public void saveTimer(final TimerRecord timerToSave) {
 		if (timerToSave.getRowId() == TimerRecord.NEW_TIMER) {
 			timerDBAdapter.createTimer(timerToSave);
@@ -101,7 +96,7 @@ public class ReportFragment extends AbstractFragment {
 
 	private void fillInReport() {
 
-		Map<String, List<TimerRecord>> allRecords = timerDBAdapter.fetchAllTimerRecordsByWeek();
+		final Map<String, List<TimerRecord>> allRecords = timerDBAdapter.fetchAllTimerRecordsByWeek();
 
 		final LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.linearLayoutReport);
 		linearLayout.removeAllViews();
@@ -150,19 +145,18 @@ public class ReportFragment extends AbstractFragment {
 
 		builder.setTitle(timerRecord.getTitle());
 
-		builder.setMessage("Are you sure to delete this timer record?").setCancelable(false)
-				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(final DialogInterface dialog, final int id) {
-						timerDBAdapter.delete(chosenRowId);
-						fillInReport();
-					}
-				}).setNegativeButton("No", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(final DialogInterface dialog, final int id) {
-						dialog.cancel();
-					}
-				});
+		builder.setMessage("Are you sure to delete this timer record?").setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int id) {
+				timerDBAdapter.delete(chosenRowId);
+				fillInReport();
+			}
+		}).setNegativeButton("No", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int id) {
+				dialog.cancel();
+			}
+		});
 		final AlertDialog alert = builder.create();
 		alert.show();
 	}

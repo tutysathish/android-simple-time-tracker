@@ -44,7 +44,7 @@ public class TimerFragment extends AbstractFragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewCreated(final View view, final Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
 		progressBar = (ProgressBar) view.findViewById(R.id.timerProgressBar);
@@ -60,11 +60,6 @@ public class TimerFragment extends AbstractFragment {
 
 		restoreSession();
 		setupScreenLabels();
-	}
-
-	@Override
-	public String getTitle() {
-		return getString(R.string.timer_title);
 	}
 
 	private void setupButtons() {
@@ -85,9 +80,9 @@ public class TimerFragment extends AbstractFragment {
 	}
 
 	private void checkInCategory() {
-		CategoryDBAdapter categoryDBAdapter = new CategoryDBAdapter(this.getActivity());
+		final CategoryDBAdapter categoryDBAdapter = new CategoryDBAdapter(this.getActivity());
 
-		List<CategoryRecord> fetchAllCategories = categoryDBAdapter.fetchAllCategories();
+		final List<CategoryRecord> fetchAllCategories = categoryDBAdapter.fetchAllCategories();
 
 		if (fetchAllCategories.size() == 1) {
 			checkIn(fetchAllCategories.get(0));
@@ -101,8 +96,7 @@ public class TimerFragment extends AbstractFragment {
 
 	public void checkIn(final CategoryRecord selectedCategory) {
 		// If the category is the same, continue timer
-		if (((sessionData.getCategory() != null) && !sessionData.getCategory().equals(selectedCategory))
-				|| sessionData.isPunchedOut()) {
+		if (((sessionData.getCategory() != null) && !sessionData.getCategory().equals(selectedCategory)) || sessionData.isPunchedOut()) {
 
 			if (!sessionData.isPunchedOut()) {
 				sessionData.stopTimer();
@@ -240,8 +234,7 @@ public class TimerFragment extends AbstractFragment {
 		if (showTv) {
 			labelTv.setText("Time spent : " + sessionData.getCurrentTimerRecord().getCategory().getCategoryName());
 			tvStartTime.setText("Start time : " + sessionData.getCurrentTimerRecord().getStartTimeStr());
-			tvEndTime.setText("End time : "
-					+ sessionData.getCurrentTimerRecord().getEstimatedEndTimeStr(sessionData.getTodayBase()));
+			tvEndTime.setText("End time : " + sessionData.getCurrentTimerRecord().getEstimatedEndTimeStr(sessionData.getTodayBase()));
 		} else {
 			labelTv.setText("No current activity");
 			tvStartTime.setText("Start time : ");
@@ -258,8 +251,7 @@ public class TimerFragment extends AbstractFragment {
 
 	public void saveTimer(final TimerRecord timerToSave) {
 		chronometer.stop();
-		final long newElapsedTime = System.currentTimeMillis()
-				- (System.currentTimeMillis() - timerToSave.getStartTime());
+		final long newElapsedTime = System.currentTimeMillis() - (System.currentTimeMillis() - timerToSave.getStartTime());
 		sessionData.setPunchInBase(newElapsedTime);
 		chronometer.setBase(newElapsedTime);
 		chronometer.start();

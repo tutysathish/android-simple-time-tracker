@@ -83,11 +83,6 @@ public class SummaryFragment extends AbstractFragment {
 		fillInSummary((CategoryRecord) catSpinner.getSelectedItem());
 	}
 
-	@Override
-	public String getTitle() {
-		return getString(R.string.summary_title);
-	}
-
 	private void fillInSummary(final CategoryRecord categoryRecord) {
 
 		final Map<String, Map<String, Long>> summaries = loadData(categoryRecord);

@@ -22,6 +22,11 @@ import com.aknot.simpletimetracker.model.CategoryRecord;
 import com.aknot.simpletimetracker.model.TimerRecord;
 import com.aknot.simpletimetracker.utils.DateTimeUtils;
 
+/**
+ * 
+ * @author Aknot
+ * 
+ */
 public class SummaryFragment extends AbstractFragment {
 
 	private final TimerDBAdapter timerDBAdapter = new TimerDBAdapter(this.getActivity());

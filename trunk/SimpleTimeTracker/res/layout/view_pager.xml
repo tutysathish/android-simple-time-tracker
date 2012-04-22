@@ -8,6 +8,7 @@
    <com.aknot.simpletimetracker.widget.ActionBar
         android:id="@+id/actionbar"
         style="@style/ActionBar"
+        actionbar:showLogo="true"
         actionbar:title="@string/app_name" />
 
     <com.aknot.simpletimetracker.indicator.TitlePageIndicator

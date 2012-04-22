@@ -4,6 +4,6 @@
     style="@style/ActionBarItem"
     android:layout_centerVertical="true"
     android:background="@drawable/actionbar_btn"
+    android:contentDescription="@string/dummy"
     android:singleLine="true"
-    android:contentDescription="Action button"
     android:visibility="visible" />

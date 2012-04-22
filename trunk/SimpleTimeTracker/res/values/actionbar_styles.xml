@@ -25,6 +25,4 @@
         <item name="android:layout_marginLeft">0px</item>
     </style>
 
-    <style name="ActionBarProgressBar" parent="@android:style/Widget.ProgressBar.Small"></style>
-
 </resources>

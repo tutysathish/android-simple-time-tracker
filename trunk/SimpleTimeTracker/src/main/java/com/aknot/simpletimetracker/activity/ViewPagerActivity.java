@@ -20,7 +20,6 @@ import com.aknot.simpletimetracker.fragment.ReportFragment;
 import com.aknot.simpletimetracker.fragment.SummaryFragment;
 import com.aknot.simpletimetracker.fragment.TimerFragment;
 import com.aknot.simpletimetracker.indicator.TitlePageIndicator;
-import com.aknot.simpletimetracker.widget.ActionBar;
 
 /**
  * 
@@ -41,7 +40,7 @@ public class ViewPagerActivity extends FragmentActivity {
 		// Initialise the database.
 		DatabaseInstance.initialize(this);
 
-		initializeActionBar();
+		// initializeActionBar();
 		initializePaging();
 	}
 
@@ -78,11 +77,11 @@ public class ViewPagerActivity extends FragmentActivity {
 	/**
 	 * This method initialize the action bar.
 	 */
-	private void initializeActionBar() {
-		final ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-		// actionBar.setHomeLogo(R.drawable.action_bar_icon);
-		actionBar.setTitle(getString(R.string.app_name));
-	}
+	// private void initializeActionBar() {
+	// final ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
+	// actionBar.setHomeLogo(R.drawable.action_bar_icon);
+	// actionBar.setTitle(getString(R.string.app_name));
+	// }
 
 	/**
 	 * This method initialize the view pager and the title indicator.

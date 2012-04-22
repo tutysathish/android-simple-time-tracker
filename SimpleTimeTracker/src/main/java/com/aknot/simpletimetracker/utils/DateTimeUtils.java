@@ -12,7 +12,7 @@ import android.util.Log;
 /**
  * @author Aknot
  */
-public final class DateTimeUtil {
+public final class DateTimeUtils {
 
 	private static String dateFormatString = "dd/MM/yyyy";
 	private static String timeFormatString = "kk:mm";

@@ -13,7 +13,7 @@ import android.util.Log;
 
 import com.aknot.simpletimetracker.model.CategoryRecord;
 import com.aknot.simpletimetracker.model.TimerRecord;
-import com.aknot.simpletimetracker.utils.DateTimeUtil;
+import com.aknot.simpletimetracker.utils.DateTimeUtils;
 
 /**
  * @author Aknot
@@ -46,8 +46,8 @@ public final class TimerDBAdapter {
 	}
 
 	public boolean deleteForDateRange(final long startDate, final long endDate) {
-		Log.d("DEBUG_QUERY", "Start Time : " + DateTimeUtil.getDateForMillis(startDate));
-		Log.d("DEBUG_QUERY", "End Time : " + DateTimeUtil.getDateForMillis(endDate));
+		Log.d("DEBUG_QUERY", "Start Time : " + DateTimeUtils.getDateForMillis(startDate));
+		Log.d("DEBUG_QUERY", "End Time : " + DateTimeUtils.getDateForMillis(endDate));
 		return DatabaseInstance.getDatabase().delete(DatabaseOpenHelper.TIMER_TABLE,
 				"start_time>=" + startDate + " and start_time <=" + endDate, null) > 0;
 	}
@@ -67,7 +67,7 @@ public final class TimerDBAdapter {
 	public List<TimerRecord> fetchLastTimerRecordsByCategory(final int categoryId) {
 		final List<TimerRecord> result = new ArrayList<TimerRecord>();
 		final Cursor cursor = DatabaseInstance.getDatabase().query(DatabaseOpenHelper.TIMER_TABLE, columnList(),
-				"start_time >= " + DateTimeUtil.getMinTimeMillisWeek() + " and category_id = " + categoryId, null,
+				"start_time >= " + DateTimeUtils.getMinTimeMillisWeek() + " and category_id = " + categoryId, null,
 				null, null, "start_time desc");
 		while (cursor.moveToNext()) {
 			result.add(fillTimerRecordFromCursor(cursor));
@@ -85,7 +85,7 @@ public final class TimerDBAdapter {
 		final Cursor cursor = DatabaseInstance.getDatabase().query(DatabaseOpenHelper.TIMER_TABLE, columnList(), null,
 				null, null, null, "start_time desc");
 		while (cursor.moveToNext()) {
-			final String currentWeek = DateTimeUtil.getWeek(cursor.getLong(cursor.getColumnIndexOrThrow("start_time")));
+			final String currentWeek = DateTimeUtils.getWeek(cursor.getLong(cursor.getColumnIndexOrThrow("start_time")));
 			if (!cursorWeek.equals(currentWeek)) {
 				result = new ArrayList<TimerRecord>();
 				allTimerRecord.put(currentWeek, result);
@@ -100,18 +100,18 @@ public final class TimerDBAdapter {
 	}
 
 	public long totalForTodayAndByCategory(final CategoryRecord category) {
-		return totalByRangeByCategory(DateTimeUtil.getMinTimeMillisToday(), DateTimeUtil.getMaxTimeMillisToday(),
+		return totalByRangeByCategory(DateTimeUtils.getMinTimeMillisToday(), DateTimeUtils.getMaxTimeMillisToday(),
 				category.getRowId());
 	}
 
 	public long totalForWeekAndByCategory(final CategoryRecord category) {
-		return totalByRangeByCategory(DateTimeUtil.getMinTimeMillisWeek(), DateTimeUtil.getMaxTimeMillisToday(),
+		return totalByRangeByCategory(DateTimeUtils.getMinTimeMillisWeek(), DateTimeUtils.getMaxTimeMillisToday(),
 				category.getRowId());
 	}
 
 	private long totalByRangeByCategory(final long startTime, final long endTime, final int categoryRowId) {
-		Log.d("DEBUG_QUERY", "Start Time : " + DateTimeUtil.getDateForMillis(startTime));
-		Log.d("DEBUG_QUERY", "End Time : " + DateTimeUtil.getDateForMillis(endTime));
+		Log.d("DEBUG_QUERY", "Start Time : " + DateTimeUtils.getDateForMillis(startTime));
+		Log.d("DEBUG_QUERY", "End Time : " + DateTimeUtils.getDateForMillis(endTime));
 		final Cursor cursor = DatabaseInstance.getDatabase().query(DatabaseOpenHelper.TIMER_TABLE, columnList(),
 				"start_time >= " + startTime + " and end_time <= " + endTime, null, null, null, null);
 		long totalMillisForCategory = 0;

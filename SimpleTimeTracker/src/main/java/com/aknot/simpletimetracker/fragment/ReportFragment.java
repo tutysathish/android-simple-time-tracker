@@ -24,7 +24,7 @@ import com.aknot.simpletimetracker.R;
 import com.aknot.simpletimetracker.database.TimerDBAdapter;
 import com.aknot.simpletimetracker.dialog.TimerEditDialog;
 import com.aknot.simpletimetracker.model.TimerRecord;
-import com.aknot.simpletimetracker.utils.DateTimeUtil;
+import com.aknot.simpletimetracker.utils.DateTimeUtils;
 
 public class ReportFragment extends AbstractFragment {
 
@@ -75,7 +75,7 @@ public class ReportFragment extends AbstractFragment {
 			buildDeleteRowDialog();
 			return true;
 		case 3:
-			showTimerDialog(TimerRecord.NEW_TIMER, DateTimeUtil.geLongFromString(dateSelected));
+			showTimerDialog(TimerRecord.NEW_TIMER, DateTimeUtils.geLongFromString(dateSelected));
 			return true;
 		case 4:
 			buildDeleteRangeDialog();
@@ -170,10 +170,10 @@ public class ReportFragment extends AbstractFragment {
 				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(final DialogInterface dialog, final int id) {
-						final Calendar currentDate = DateTimeUtil.getCalendarFromString(dateSelected);
+						final Calendar currentDate = DateTimeUtils.getCalendarFromString(dateSelected);
 
-						final long startDate = DateTimeUtil.getMinTimeMillisToday(currentDate);
-						final long endDate = DateTimeUtil.getMaxTimeMillisToday(currentDate);
+						final long startDate = DateTimeUtils.getMinTimeMillisToday(currentDate);
+						final long endDate = DateTimeUtils.getMaxTimeMillisToday(currentDate);
 
 						timerDBAdapter.deleteForDateRange(startDate, endDate);
 

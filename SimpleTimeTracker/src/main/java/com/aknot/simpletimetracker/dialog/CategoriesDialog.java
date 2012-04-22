@@ -29,11 +29,11 @@ public final class CategoriesDialog extends Dialog {
 	 * @param context
 	 * @param style
 	 */
-	public CategoriesDialog(Context context, int style) {
+	public CategoriesDialog(final Context context, final int style) {
 		super(context, style);
 		categories = new ListView(context);
 		categories.setAdapter(CategoryAdapter.getCategoryAdapterFromDB(context, R.layout.check_in_categories, false));
-		LinearLayout contentView = new LinearLayout(context);
+		final LinearLayout contentView = new LinearLayout(context);
 		contentView.setOrientation(LinearLayout.VERTICAL);
 		contentView.addView(categories);
 		setContentView(contentView);
@@ -51,8 +51,8 @@ public final class CategoriesDialog extends Dialog {
 			 * Call back when category is chosen
 			 */
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				CategoryRecord category = (CategoryRecord) categories.getItemAtPosition(arg2);
+			public void onItemClick(final AdapterView<?> adapterView, final View arg1, final int itemPosition, final long l) {
+				final CategoryRecord category = (CategoryRecord) categories.getItemAtPosition(itemPosition);
 				callback.checkIn(category);
 				dismiss();
 			}

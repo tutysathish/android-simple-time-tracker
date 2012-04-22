@@ -20,7 +20,7 @@ import com.aknot.simpletimetracker.R;
 import com.aknot.simpletimetracker.database.TimerDBAdapter;
 import com.aknot.simpletimetracker.model.CategoryRecord;
 import com.aknot.simpletimetracker.model.TimerRecord;
-import com.aknot.simpletimetracker.utils.DateTimeUtil;
+import com.aknot.simpletimetracker.utils.DateTimeUtils;
 
 public class SummaryFragment extends AbstractFragment {
 
@@ -88,7 +88,7 @@ public class SummaryFragment extends AbstractFragment {
 		final Map<String, Map<String, Long>> summaries = loadData(categoryRecord);
 
 		final TextView weekSummary = (TextView) getView().findViewById(R.id.tvWeekSummary);
-		weekSummary.setText("Week " + DateTimeUtil.getCurrentWeek() + " : " + DateTimeUtil.timeInMillisToText(weekTimeElapsed));
+		weekSummary.setText("Week " + DateTimeUtils.getCurrentWeek() + " : " + DateTimeUtils.timeInMillisToText(weekTimeElapsed));
 
 		final TextView targetHour = (TextView) getView().findViewById(R.id.tvTargetHour);
 		if (category != null) {
@@ -112,7 +112,7 @@ public class SummaryFragment extends AbstractFragment {
 			for (final Entry<String, Long> rowCaption : summaryRows.entrySet()) {
 				final long totalTimeInMillis = rowCaption.getValue();
 				final TextView rowTextView = new TextView(this.getActivity());
-				rowTextView.setText("    " + rowCaption.getKey() + ": " + DateTimeUtil.timeInMillisToText(totalTimeInMillis));
+				rowTextView.setText("    " + rowCaption.getKey() + ": " + DateTimeUtils.timeInMillisToText(totalTimeInMillis));
 				linearLayout.addView(rowTextView);
 			}
 		}

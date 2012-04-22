@@ -6,7 +6,7 @@ import java.util.GregorianCalendar;
 
 import android.text.format.DateFormat;
 
-import com.aknot.simpletimetracker.utils.DateTimeUtil;
+import com.aknot.simpletimetracker.utils.DateTimeUtils;
 
 /**
  * Record to store the timer.
@@ -74,7 +74,7 @@ public final class TimerRecord implements Serializable {
 		if (startTime == 0) {
 			return "";
 		} else {
-			return DateTimeUtil.formatTime(startTime).toString();
+			return DateTimeUtils.formatTime(startTime).toString();
 		}
 	}
 
@@ -83,7 +83,7 @@ public final class TimerRecord implements Serializable {
 			return "";
 		} else {
 			final long estimatedTime = (long) (startTime + category.getTargetHour() * 3600000 - totalToday);
-			return DateTimeUtil.formatTime(estimatedTime).toString();
+			return DateTimeUtils.formatTime(estimatedTime).toString();
 		}
 	}
 
@@ -91,7 +91,7 @@ public final class TimerRecord implements Serializable {
 		if (endTime == 0) {
 			return "";
 		} else {
-			return DateTimeUtil.formatTime(endTime).toString();
+			return DateTimeUtils.formatTime(endTime).toString();
 		}
 	}
 
@@ -121,7 +121,7 @@ public final class TimerRecord implements Serializable {
 
 	public String getTitleWithDuration() {
 		return getCategory().getCategoryName() + ": " + getStartTimeStr() + " - " + getEndTimeStr() + " ("
-				+ DateTimeUtil.hrColMinColSec(getDurationInMilliseconds(), true) + ")";
+				+ DateTimeUtils.hrColMinColSec(getDurationInMilliseconds(), true) + ")";
 	}
 
 	public String getTitle() {

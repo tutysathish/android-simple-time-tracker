@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.Chronometer.OnChronometerTickListener;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -27,6 +28,11 @@ import com.aknot.simpletimetracker.model.TimerRecord;
 import com.aknot.simpletimetracker.utils.DateTimeUtils;
 import com.aknot.simpletimetracker.utils.SessionData;
 
+/**
+ * 
+ * @author Aknot
+ * 
+ */
 public class TimerFragment extends AbstractFragment {
 
 	private Chronometer chronometer;
@@ -233,15 +239,14 @@ public class TimerFragment extends AbstractFragment {
 
 		if (showTv) {
 			labelTv.setText("Time spent : " + sessionData.getCurrentTimerRecord().getCategory().getCategoryName());
-			tvStartTime.setText("Start time : " + sessionData.getCurrentTimerRecord().getStartTimeStr());
-			tvEndTime.setText("End time : " + sessionData.getCurrentTimerRecord().getEstimatedEndTimeStr(sessionData.getTodayBase()));
+			tvStartTime.setText(sessionData.getCurrentTimerRecord().getStartTimeStr());
+			tvEndTime.setText(sessionData.getCurrentTimerRecord().getEstimatedEndTimeStr(sessionData.getTodayBase()));
 		} else {
 			labelTv.setText("No current activity");
-			tvStartTime.setText("Start time : ");
-			tvEndTime.setText("End time : ");
 		}
 
-		tvStartTime.setOnClickListener(new View.OnClickListener() {
+		final LinearLayout editStartTimer = (LinearLayout) getView().findViewById(R.id.linearLayoutStart);
+		editStartTimer.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View view) {
 				showDialog();

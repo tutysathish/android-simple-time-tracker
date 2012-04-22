@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- Application -->
+
+    <!-- Application -->
     <string name="app_name">SimpleTimeTracker</string>
     <string name="database_name">time_tracker</string>
-    
+
     <!-- Dummy -->
     <string name="dummy">Dummy</string>
 
@@ -14,13 +15,16 @@
     <string name="timer_title">Timer</string>
     <string name="timer_button_in">In</string>
     <string name="timer_button_out">Out</string>
+    <string name="timer_start">Start time</string>
+    <string name="timer_end">End time</string>
+    <string name="timer_week">Week\ :</string>
+    <string name="timer_today">Today\ :</string>
 
     <!-- Second tab : summary -->
     <string name="summary_title">Summary</string>
 
     <!-- Third tab : reports -->
     <string name="report_title">Reports</string>
-<!--     <string name="groupTitle">Groups</string> -->
     <string name="menu_edit">Edit</string>
     <string name="menu_del">Delete</string>
     <string name="menu_add">Add</string>

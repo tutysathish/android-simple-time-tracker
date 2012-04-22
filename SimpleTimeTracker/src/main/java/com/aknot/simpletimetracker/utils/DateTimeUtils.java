@@ -17,6 +17,13 @@ public final class DateTimeUtils {
 	private static String dateFormatString = "dd/MM/yyyy";
 	private static String timeFormatString = "kk:mm";
 
+	public static final long oneSecond = 1000;
+	public static final long oneMinute = oneSecond * 60;
+	public static final long oneHour = oneMinute * 60;
+	public static final long oneDay = oneHour * 24;
+	public static final long oneWeek = oneDay * 7;
+	public static final long oneMonth = oneDay * 30;
+
 	public static String getCurrentWeek() {
 		return getWeek(Calendar.getInstance());
 	}

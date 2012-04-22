@@ -26,6 +26,11 @@ import com.aknot.simpletimetracker.dialog.TimerEditDialog;
 import com.aknot.simpletimetracker.model.TimerRecord;
 import com.aknot.simpletimetracker.utils.DateTimeUtils;
 
+/**
+ * 
+ * @author Aknot
+ * 
+ */
 public class ReportFragment extends AbstractFragment {
 
 	private static final String HEADER = "Header";

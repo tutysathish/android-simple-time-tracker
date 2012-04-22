@@ -19,6 +19,7 @@ import com.aknot.simpletimetracker.model.CategoryAdapter;
 import com.aknot.simpletimetracker.model.CategoryRecord;
 
 /**
+ * This activity give the possibility to manage the categories.
  * 
  * @author Aknot
  * 
@@ -32,7 +33,7 @@ public class CategoryActivity extends ListActivity {
 	private boolean updating;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.manage_categories_list);
 
@@ -41,11 +42,7 @@ public class CategoryActivity extends ListActivity {
 		refreshCategoryList();
 	}
 
-	private void refreshCategoryList() {
-		setListAdapter(CategoryAdapter.getCategoryAdapterFromDB(this, R.layout.manage_categories_row, true));
-	}
-
-	public void onEditDialogSave(CategoryRecord category) {
+	public void onEditDialogSave(final CategoryRecord category) {
 		if (updating) {
 			categoryDBAdapter.update(category);
 		} else {
@@ -55,7 +52,7 @@ public class CategoryActivity extends ListActivity {
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 
 		categoryClicked = (CategoryRecord) getListView().getItemAtPosition(((AdapterContextMenuInfo) menuInfo).position);
@@ -67,15 +64,15 @@ public class CategoryActivity extends ListActivity {
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
+	public boolean onContextItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case 1:
 			updating = true;
-			CategoryEditDialog categoryEditDialog = new CategoryEditDialog(this);
+			final CategoryEditDialog categoryEditDialog = new CategoryEditDialog(this);
 			categoryEditDialog.buildEditDialog(categoryClicked, this).show();
 			return true;
 		case 2:
-			TimerDBAdapter timerDBAdapter = new TimerDBAdapter(this);
+			final TimerDBAdapter timerDBAdapter = new TimerDBAdapter(this);
 			if (timerDBAdapter.categoryHasTimerRecord(categoryClicked)) {
 				showDeleteWarningDialog();
 			} else {
@@ -88,31 +85,15 @@ public class CategoryActivity extends ListActivity {
 		}
 	}
 
-	private void showDeleteWarningDialog() {
-		final CharSequence[] items = { "Go ahead and delete it.", "Don't delete it." };
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Warning: Time is already assigned to " + categoryClicked + ":");
-		builder.setItems(items, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int item) {
-				if (item == 0) {
-					categoryDBAdapter.delete(categoryClicked.getRowId());
-					refreshCategoryList();
-				}
-			}
-		});
-		builder.create().show();
-	}
-
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, 3, 0, R.string.category_menu_add);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case 3:
 			updating = false;
@@ -120,6 +101,26 @@ public class CategoryActivity extends ListActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void refreshCategoryList() {
+		setListAdapter(CategoryAdapter.getCategoryAdapterFromDB(this, R.layout.manage_categories_row, true));
+	}
+
+	private void showDeleteWarningDialog() {
+		final CharSequence[] items = { "Go ahead and delete it.", "Don't delete it." };
+		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Warning: Time is already assigned to " + categoryClicked + ":");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int item) {
+				if (item == 0) {
+					categoryDBAdapter.delete(categoryClicked.getRowId());
+					refreshCategoryList();
+				}
+			}
+		});
+		builder.create().show();
 	}
 
 }

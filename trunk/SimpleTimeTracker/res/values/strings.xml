@@ -20,7 +20,7 @@
 
     <!-- Third tab : reports -->
     <string name="report_title">Reports</string>
-    <string name="groupTitle">Groups</string>
+<!--     <string name="groupTitle">Groups</string> -->
     <string name="menu_edit">Edit</string>
     <string name="menu_del">Delete</string>
     <string name="menu_add">Add</string>

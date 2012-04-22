@@ -24,7 +24,7 @@ import com.aknot.simpletimetracker.dialog.CategoriesDialog;
 import com.aknot.simpletimetracker.dialog.TimerEditDialog;
 import com.aknot.simpletimetracker.model.CategoryRecord;
 import com.aknot.simpletimetracker.model.TimerRecord;
-import com.aknot.simpletimetracker.utils.DateTimeUtil;
+import com.aknot.simpletimetracker.utils.DateTimeUtils;
 import com.aknot.simpletimetracker.utils.SessionData;
 
 public class TimerFragment extends AbstractFragment {
@@ -192,15 +192,15 @@ public class TimerFragment extends AbstractFragment {
 				final long elapsed = tick - sessionData.getPunchInBase();
 				// Main Timer
 				final TextView mainViewChronOutput = (TextView) getView().findViewById(R.id.mainViewChronOutput);
-				mainViewChronOutput.setText(DateTimeUtil.hrColMinColSec(elapsed, false));
+				mainViewChronOutput.setText(DateTimeUtils.hrColMinColSec(elapsed, false));
 				// Today Timer
 				final long todayElapsed = (tick - chronometer.getBase()) + sessionData.getTodayBase();
 				final TextView todayViewChronOutput = (TextView) getView().findViewById(R.id.todayViewChronOutput);
-				todayViewChronOutput.setText("Today : " + DateTimeUtil.hrColMinColSec(todayElapsed, false));
+				todayViewChronOutput.setText("Today : " + DateTimeUtils.hrColMinColSec(todayElapsed, false));
 				// Week Timer
 				final long weekElapsed = (tick - chronometer.getBase()) + sessionData.getWeekBase();
 				final TextView weekViewChronOutput = (TextView) getView().findViewById(R.id.weekViewChronOutput);
-				weekViewChronOutput.setText("Week : " + DateTimeUtil.hrColMinColSec(weekElapsed, false));
+				weekViewChronOutput.setText("Week : " + DateTimeUtils.hrColMinColSec(weekElapsed, false));
 				// Progress Bar
 				final double targetHour = sessionData.getCurrentTimerRecord().getCategory().getTargetHour();
 				if (targetHour == 0) {
@@ -218,10 +218,10 @@ public class TimerFragment extends AbstractFragment {
 	 */
 	private void setupScreenLabels() {
 		final TextView tvWeek = (TextView) getView().findViewById(R.id.currentWeek);
-		tvWeek.setText("Week : " + DateTimeUtil.getCurrentWeek());
+		tvWeek.setText("Week : " + DateTimeUtils.getCurrentWeek());
 
 		final TextView tvDate = (TextView) getView().findViewById(R.id.currentDate);
-		tvDate.setText("Date : " + DateTimeUtil.getCurrentFormatedDate());
+		tvDate.setText("Date : " + DateTimeUtils.getCurrentFormatedDate());
 
 		boolean showTv = sessionData.getCurrentTimerRecord() != null;
 		showTv &= sessionData.getCurrentTimerRecord().getCategory() != null;

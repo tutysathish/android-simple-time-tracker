@@ -26,12 +26,8 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 	private final LinearLayout mActionsView;
 	private final LayoutInflater mInflater;
 	private final RelativeLayout mBarView;
-	// private final RelativeLayout mHomeLayout;
 	private final ImageView mLogoView;
 	private final TextView mTitleView;
-
-	// private final ImageButton mHomeBtn;
-	// private final ProgressBar mProgress;
 
 	public ActionBar(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
@@ -42,45 +38,23 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 		addView(mBarView);
 
 		mLogoView = (ImageView) mBarView.findViewById(R.id.actionbar_home_logo);
-		// mHomeLayout = (RelativeLayout) mBarView.findViewById(R.id.actionbar_home_bg);
-		// mHomeBtn = (ImageButton) mBarView.findViewById(R.id.actionbar_home_btn);
 
 		mTitleView = (TextView) mBarView.findViewById(R.id.actionbar_title);
 		mActionsView = (LinearLayout) mBarView.findViewById(R.id.actionbar_actions);
 
-		// mProgress = (ProgressBar) mBarView.findViewById(R.id.actionbar_progress);
-
 		final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ActionBar);
+
 		final CharSequence title = a.getString(R.styleable.ActionBar_title);
 		if (title != null) {
 			setTitle(title);
 		}
+
+		final Boolean showLogo = a.getBoolean(R.styleable.ActionBar_showLogo, false);
+		if (showLogo != null) {
+			setShowLogo(showLogo);
+		}
+
 		a.recycle();
-	}
-
-	public void setHomeLogo(final int resId) {
-		mLogoView.setImageResource(resId);
-		mLogoView.setVisibility(View.VISIBLE);
-	}
-
-	public void setTitle(final CharSequence title) {
-		mTitleView.setText(title);
-	}
-
-	public void setTitle(final int resid) {
-		mTitleView.setText(resid);
-	}
-
-	// public void setProgressBarVisibility(int visibility) {
-	// mProgress.setVisibility(visibility);
-	// }
-	//
-	// public int getProgressBarVisibility() {
-	// return mProgress.getVisibility();
-	// }
-
-	public void setOnTitleClickListener(final OnClickListener listener) {
-		mTitleView.setOnClickListener(listener);
 	}
 
 	@Override
@@ -131,6 +105,15 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
 	public int getActionCount() {
 		return mActionsView.getChildCount();
+	}
+
+	private void setShowLogo(final boolean showLogo) {
+		mLogoView.setImageResource(R.drawable.action_bar_icon);
+		mLogoView.setVisibility(View.VISIBLE);
+	}
+
+	private void setTitle(final CharSequence title) {
+		mTitleView.setText(title);
 	}
 
 	private View inflateAction(final Action action) {

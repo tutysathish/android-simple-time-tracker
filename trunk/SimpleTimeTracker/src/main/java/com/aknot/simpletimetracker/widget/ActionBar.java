@@ -1,10 +1,6 @@
 package com.aknot.simpletimetracker.widget;
 
-import java.util.LinkedList;
-
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -15,9 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aknot.simpletimetracker.R;
+import com.aknot.simpletimetracker.action.Action;
+import com.aknot.simpletimetracker.action.ActionList;
 
 /**
  * 
@@ -145,54 +142,6 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 		view.setTag(action);
 		view.setOnClickListener(this);
 		return view;
-	}
-
-	/**
-	 * A {@link LinkedList} that holds a list of {@link Action}s.
-	 */
-	public static class ActionList extends LinkedList<Action> {
-	}
-
-	/**
-	 * Definition of an action that could be performed, along with a icon to show.
-	 */
-	public interface Action {
-		public int getDrawable();
-
-		public void performAction(View view);
-	}
-
-	public static abstract class AbstractAction implements Action {
-		final private int mDrawable;
-
-		public AbstractAction(final int drawable) {
-			mDrawable = drawable;
-		}
-
-		@Override
-		public int getDrawable() {
-			return mDrawable;
-		}
-	}
-
-	public static class IntentAction extends AbstractAction {
-		private final Context mContext;
-		private final Intent mIntent;
-
-		public IntentAction(final Context context, final Intent intent, final int drawable) {
-			super(drawable);
-			mContext = context;
-			mIntent = intent;
-		}
-
-		@Override
-		public void performAction(final View view) {
-			try {
-				mContext.startActivity(mIntent);
-			} catch (final ActivityNotFoundException e) {
-				Toast.makeText(mContext, "Activity Not Found", Toast.LENGTH_SHORT).show();
-			}
-		}
 	}
 
 }

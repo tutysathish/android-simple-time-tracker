@@ -135,7 +135,7 @@ public final class DateTimeUtils {
 		final SimpleDateFormat inputFormat = new SimpleDateFormat("E, MMMM dd, yyyy");
 		Date parsedDate = new Date();
 		try {
-			parsedDate = inputFormat.parse(date);
+			parsedDate = inputFormat.parse(date.trim());
 		} catch (final ParseException e) {
 			Log.e("DATE_PARSER", "Error: Impossible to parse input string to calendar.", e);
 			throw new RuntimeException(e);

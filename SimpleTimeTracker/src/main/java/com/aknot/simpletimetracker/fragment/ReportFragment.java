@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -108,6 +109,12 @@ public class ReportFragment extends AbstractFragment {
 
 		for (final Entry<String, List<TimerRecord>> entry : allRecords.entrySet()) {
 			final List<TimerRecord> reportRows = entry.getValue();
+
+			// TEST
+			final LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			final View view = layoutInflater.inflate(R.layout.report_item, null);
+			final LinearLayout line = (LinearLayout) view.findViewById(R.id.report_line);
+			linearLayout.addView(line);
 
 			final TextView headerTextView = new TextView(this.getActivity());
 			headerTextView.setText("Week : " + entry.getKey());

@@ -15,14 +15,14 @@
             android:id="@+id/currentWeek"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="40dp"
-            android:text="Week : " />
+            android:text="@string/timer_week" />
 
         <TextView
             android:id="@+id/currentDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date : " />
+            android:layout_marginLeft="40dp"
+            android:text="@string/timer_date" />
     </LinearLayout>
 
     <TextView
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:text="Time spent: "
         android:textColor="#FFFFFF"
         android:textSize="20sp" >
@@ -60,6 +60,9 @@
         style="@style/CustomProgressBarHorizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
         android:max="100" />
 
     <LinearLayout

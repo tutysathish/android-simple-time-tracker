@@ -17,9 +17,9 @@
     <string name="timer_button_out">Out</string>
     <string name="timer_start">Start time</string>
     <string name="timer_end">End time</string>
-    <string name="timer_week">Week\ :\ </string>
-    <string name="timer_today">Today\ :</string>
-    <string name="timer_date">Date\ :\ </string>
+    <string name="timer_week">Week :&#160;</string>
+    <string name="timer_today">Today :&#160;</string>
+    <string name="timer_date">Date :&#160;</string>
 
     <!-- Second tab : summary -->
     <string name="summary_title">Summary</string>

@@ -75,15 +75,6 @@ public class ViewPagerActivity extends FragmentActivity {
 	}
 
 	/**
-	 * This method initialize the action bar.
-	 */
-	// private void initializeActionBar() {
-	// final ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-	// actionBar.setHomeLogo(R.drawable.action_bar_icon);
-	// actionBar.setTitle(getString(R.string.app_name));
-	// }
-
-	/**
 	 * This method initialize the view pager and the title indicator.
 	 */
 	private void initializePaging() {

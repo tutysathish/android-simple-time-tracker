@@ -7,10 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -18,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aknot.simpletimetracker.R;
@@ -26,6 +22,7 @@ import com.aknot.simpletimetracker.database.TimerDBAdapter;
 import com.aknot.simpletimetracker.dialog.TimerEditDialog;
 import com.aknot.simpletimetracker.model.TimerRecord;
 import com.aknot.simpletimetracker.utils.DateTimeUtils;
+import com.aknot.simpletimetracker.widget.ReportItems;
 
 /**
  * 
@@ -104,43 +101,33 @@ public class ReportFragment extends AbstractFragment {
 
 		final Map<String, List<TimerRecord>> allRecords = timerDBAdapter.fetchAllTimerRecordsByWeek();
 
-		final LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.linearLayoutReport);
-		linearLayout.removeAllViews();
+		final ReportItems reportItems = (ReportItems) getView().findViewById(R.id.reportItems);
+		// reportItems.removeAllViews();
 
 		for (final Entry<String, List<TimerRecord>> entry : allRecords.entrySet()) {
 			final List<TimerRecord> reportRows = entry.getValue();
 
-			// TEST
-			final LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			final View view = layoutInflater.inflate(R.layout.report_item, null);
-			final LinearLayout line = (LinearLayout) view.findViewById(R.id.report_line);
-			linearLayout.addView(line);
+			reportItems.addItem("TEST");
 
-			final TextView headerTextView = new TextView(this.getActivity());
-			headerTextView.setText("Week : " + entry.getKey());
-			headerTextView.setTextColor(Color.parseColor("#FF6899FF"));
-			headerTextView.setTypeface(Typeface.DEFAULT_BOLD);
-
-			linearLayout.addView(headerTextView);
+			reportItems.addHeader("Week : " + entry.getKey());
 
 			String previousHeader = "";
 			for (final TimerRecord rowCaption : reportRows) {
 				if (!previousHeader.equals(rowCaption.getStartDateStr())) {
-					final TextView rowTextView = new TextView(this.getActivity());
-					rowTextView.setText("    " + rowCaption.getStartDateStr());
-					rowTextView.setTextColor(Color.GREEN);
-					rowTextView.setTag(HEADER);
-					registerForContextMenu(rowTextView);
-					linearLayout.addView(rowTextView);
-					previousHeader = rowCaption.getStartDateStr();
+
+					reportItems.addLine(rowCaption.getStartDateStr());
+
+					// registerForContextMenu(rowTextView);
+					// reportItems.addView(rowTextView);
+					// previousHeader = rowCaption.getStartDateStr();
 				}
 
-				final TextView rowTextView = new TextView(this.getActivity());
-				rowTextView.setText("        " + rowCaption.getTitleWithDuration());
-				rowTextView.setTag(DETAIL);
-				rowToTimerRecordRowIdMap.put(rowTextView, rowCaption.getRowId());
-				registerForContextMenu(rowTextView);
-				linearLayout.addView(rowTextView);
+				// final TextView rowTextView = new TextView(this.getActivity());
+				// rowTextView.setText("        " + rowCaption.getTitleWithDuration());
+				// rowTextView.setTag(DETAIL);
+				// rowToTimerRecordRowIdMap.put(rowTextView, rowCaption.getRowId());
+				// registerForContextMenu(rowTextView);
+				// reportItems.addView(rowTextView);
 			}
 		}
 	}

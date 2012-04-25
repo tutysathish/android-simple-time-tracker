@@ -102,32 +102,24 @@ public class ReportFragment extends AbstractFragment {
 		final Map<String, List<TimerRecord>> allRecords = timerDBAdapter.fetchAllTimerRecordsByWeek();
 
 		final ReportItems reportItems = (ReportItems) getView().findViewById(R.id.reportItems);
-		// reportItems.removeAllViews();
+		reportItems.removeAllViews();
 
 		for (final Entry<String, List<TimerRecord>> entry : allRecords.entrySet()) {
 			final List<TimerRecord> reportRows = entry.getValue();
 
-			reportItems.addItem("TEST");
-
-			reportItems.addHeader("Week : " + entry.getKey());
+			reportItems.addItem();
+			reportItems.putHeader(entry.getKey());
 
 			String previousHeader = "";
 			for (final TimerRecord rowCaption : reportRows) {
 				if (!previousHeader.equals(rowCaption.getStartDateStr())) {
-
-					reportItems.addLine(rowCaption.getStartDateStr());
-
-					// registerForContextMenu(rowTextView);
-					// reportItems.addView(rowTextView);
-					// previousHeader = rowCaption.getStartDateStr();
+					registerForContextMenu(reportItems.putDay(rowCaption.getStartDateStr()));
+					previousHeader = rowCaption.getStartDateStr();
 				}
 
-				// final TextView rowTextView = new TextView(this.getActivity());
-				// rowTextView.setText("        " + rowCaption.getTitleWithDuration());
-				// rowTextView.setTag(DETAIL);
-				// rowToTimerRecordRowIdMap.put(rowTextView, rowCaption.getRowId());
-				// registerForContextMenu(rowTextView);
-				// reportItems.addView(rowTextView);
+				final TextView putHours = reportItems.putHours(rowCaption.getTitleWithDuration());
+				rowToTimerRecordRowIdMap.put(putHours, rowCaption.getRowId());
+				registerForContextMenu(putHours);
 			}
 		}
 	}

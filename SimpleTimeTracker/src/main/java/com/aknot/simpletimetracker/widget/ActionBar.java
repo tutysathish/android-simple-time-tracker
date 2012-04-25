@@ -18,16 +18,18 @@ import com.aknot.simpletimetracker.action.ActionList;
 
 /**
  * 
+ * This widget contain/implements the layout for an action bar.
+ * 
  * @author aknot
  * 
  */
 public class ActionBar extends RelativeLayout implements OnClickListener {
 
-	private final LinearLayout mActionsView;
 	private final LayoutInflater mInflater;
 	private final RelativeLayout mBarView;
 	private final ImageView mLogoView;
 	private final TextView mTitleView;
+	private final LinearLayout mActionsView;
 
 	public ActionBar(final Context context, final AttributeSet attrs) {
 		super(context, attrs);

@@ -29,6 +29,7 @@ import com.aknot.simpletimetracker.utils.DateTimeUtils;
 import com.aknot.simpletimetracker.utils.SessionData;
 
 /**
+ * This fragment represent the main timer page.
  * 
  * @author Aknot
  * 
@@ -45,7 +46,6 @@ public class TimerFragment extends AbstractFragment {
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-
 		return inflater.inflate(R.layout.tab_timer, container, false);
 	}
 

@@ -20,14 +20,14 @@ import com.aknot.simpletimetracker.model.TimerRecord;
 
 public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSetListener {
 
-	private enum TimeFieldSelected {
+	private enum TimerFieldSelected {
 		IN, OUT
 	}
 
 	private Button inTimer;
 	private Button outTimer;
 
-	private TimeFieldSelected selectedTimeField;
+	private TimerFieldSelected selectedTimeField;
 
 	private TimerRecord timerRecord;
 
@@ -48,8 +48,7 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 		if (rowId != TimerRecord.NEW_TIMER) {
 			timerRecord = timerDBAdapter.fetchByRowID(rowId);
 			for (int position = 0; position < catSpinner.getCount(); position++) {
-				if (((CategoryRecord) catSpinner.getItemAtPosition(position)).getRowId() == timerRecord.getCategory()
-						.getRowId()) {
+				if (((CategoryRecord) catSpinner.getItemAtPosition(position)).getRowId() == timerRecord.getCategory().getRowId()) {
 					catSpinner.setSelection(position);
 					break;
 				}
@@ -81,8 +80,7 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 		catSpinner.setAdapter(CategoryRecord.getCategoryAdapter(timerFragment.getActivity()));
 
 		for (int position = 0; position < catSpinner.getCount(); position++) {
-			if (((CategoryRecord) catSpinner.getItemAtPosition(position)).getRowId() == this.timerRecord.getCategory()
-					.getRowId()) {
+			if (((CategoryRecord) catSpinner.getItemAtPosition(position)).getRowId() == this.timerRecord.getCategory().getRowId()) {
 				catSpinner.setSelection(position);
 				break;
 			}
@@ -97,10 +95,10 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 
 	@Override
 	public void onTimeSet(final TimePicker view, final int hourOfDay, final int minute) {
-		if (selectedTimeField == TimeFieldSelected.IN) {
+		if (selectedTimeField == TimerFieldSelected.IN) {
 			timerRecord.setStartTimeComponent(Calendar.HOUR_OF_DAY, hourOfDay);
 			timerRecord.setStartTimeComponent(Calendar.MINUTE, minute);
-		} else if (selectedTimeField == TimeFieldSelected.OUT) {
+		} else if (selectedTimeField == TimerFieldSelected.OUT) {
 			timerRecord.setEndTimeComponent(Calendar.HOUR_OF_DAY, hourOfDay);
 			timerRecord.setEndTimeComponent(Calendar.MINUTE, minute);
 		}
@@ -120,9 +118,8 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 		inTimer.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				selectedTimeField = TimeFieldSelected.IN;
-				new TimePickerDialog(reportFragment.getActivity(), listener, timerRecord
-						.getStartTimeComponent(Calendar.HOUR_OF_DAY), timerRecord
+				selectedTimeField = TimerFieldSelected.IN;
+				new TimePickerDialog(reportFragment.getActivity(), listener, timerRecord.getStartTimeComponent(Calendar.HOUR_OF_DAY), timerRecord
 						.getStartTimeComponent(Calendar.MINUTE), false).show();
 			}
 		});
@@ -131,10 +128,9 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 		outTimer.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				selectedTimeField = TimeFieldSelected.OUT;
-				new TimePickerDialog(reportFragment.getActivity(), listener, timerRecord
-						.getEndTimeComponent(Calendar.HOUR_OF_DAY), timerRecord.getEndTimeComponent(Calendar.MINUTE),
-						false).show();
+				selectedTimeField = TimerFieldSelected.OUT;
+				new TimePickerDialog(reportFragment.getActivity(), listener, timerRecord.getEndTimeComponent(Calendar.HOUR_OF_DAY), timerRecord
+						.getEndTimeComponent(Calendar.MINUTE), false).show();
 			}
 		});
 
@@ -172,9 +168,8 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 		inTimer.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				selectedTimeField = TimeFieldSelected.IN;
-				new TimePickerDialog(timerFragment.getActivity(), listener, timerRecord
-						.getStartTimeComponent(Calendar.HOUR_OF_DAY), timerRecord
+				selectedTimeField = TimerFieldSelected.IN;
+				new TimePickerDialog(timerFragment.getActivity(), listener, timerRecord.getStartTimeComponent(Calendar.HOUR_OF_DAY), timerRecord
 						.getStartTimeComponent(Calendar.MINUTE), false).show();
 			}
 		});
@@ -204,8 +199,7 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 
 	private boolean validate(final ReportFragment reportFragment) {
 		if (timerRecord.getEndTime() < timerRecord.getStartTime()) {
-			Toast.makeText(reportFragment.getActivity(), "Invalid input: end time must be after start time.",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(reportFragment.getActivity(), "Invalid input: end time must be after start time.", Toast.LENGTH_LONG).show();
 			return false;
 		}
 		return true;
@@ -213,8 +207,7 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 
 	private boolean validate(final TimerFragment timerFragment) {
 		if (timerRecord.getStartTime() > System.currentTimeMillis()) {
-			Toast.makeText(timerFragment.getActivity(), "Invalid input: start time must be before current time.",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(timerFragment.getActivity(), "Invalid input: start time must be before current time.", Toast.LENGTH_LONG).show();
 			return false;
 		}
 		return true;

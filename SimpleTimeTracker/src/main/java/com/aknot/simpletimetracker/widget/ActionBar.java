@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.aknot.simpletimetracker.R;
 import com.aknot.simpletimetracker.action.Action;
-import com.aknot.simpletimetracker.action.ActionList;
 
 /**
  * 
@@ -68,19 +67,11 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 		}
 	}
 
-	public void addActions(final ActionList actionList) {
-		final int actions = actionList.size();
-		for (int i = 0; i < actions; i++) {
-			addAction(actionList.get(i));
-		}
-	}
-
 	public void addAction(final Action action) {
-		final int index = mActionsView.getChildCount();
-		addAction(action, index);
+		addAction(action, mActionsView.getChildCount());
 	}
 
-	public void addAction(final Action action, final int index) {
+	private void addAction(final Action action, final int index) {
 		mActionsView.addView(inflateAction(action), index);
 	}
 
@@ -103,10 +94,6 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 				}
 			}
 		}
-	}
-
-	public int getActionCount() {
-		return mActionsView.getChildCount();
 	}
 
 	private void setShowLogo(final boolean showLogo) {

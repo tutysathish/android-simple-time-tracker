@@ -155,19 +155,41 @@ public final class DateTimeUtils {
 	public static String timeInMillisToText(final long totalTimeInMillis) {
 		final long minutes = (totalTimeInMillis / (1000 * 60)) % 60;
 		final long hours = totalTimeInMillis / (1000 * 60 * 60);
+
+		final String hoursWord = getHoursWord(Long.valueOf(hours).intValue());
+		final String minutesWord = getMinutessWord(Long.valueOf(minutes).intValue());
+
+		return hours + " " + hoursWord + ", " + minutes + " " + minutesWord;
+	}
+
+	public static String doubleToText(final double d) {
+		final int hours = Double.valueOf(d).intValue();
+		final int minutes = Double.valueOf(d * 10 - hours * 10).intValue() * 6;
+
+		final String hoursWord = getHoursWord(hours);
+		final String minutesWord = getMinutessWord(minutes);
+
+		return hours + " " + hoursWord + ", " + minutes + " " + minutesWord;
+	}
+
+	private static String getHoursWord(final int hours) {
 		String hoursWord;
 		if (hours == 1 || hours == 0) {
 			hoursWord = "hour";
 		} else {
 			hoursWord = "hours";
 		}
+		return hoursWord;
+	}
+
+	private static String getMinutessWord(final int minutes) {
 		String minutesWord;
 		if (minutes == 1 || minutes == 0) {
 			minutesWord = "minute";
 		} else {
 			minutesWord = "minutes";
 		}
-		return hours + " " + hoursWord + ", " + minutes + " " + minutesWord;
+		return minutesWord;
 	}
 
 }

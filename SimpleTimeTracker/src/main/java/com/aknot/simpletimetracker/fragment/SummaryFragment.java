@@ -98,7 +98,7 @@ public class SummaryFragment extends AbstractFragment {
 
 		final TextView targetHour = (TextView) getView().findViewById(R.id.tvTargetHour);
 		if (category != null) {
-			targetHour.setText(doubleToText(category.getTargetHour()));
+			targetHour.setText(DateTimeUtils.doubleToText(category.getTargetHour()));
 		} else {
 			targetHour.setText(getString(R.string.summary_no_target));
 		}
@@ -158,13 +158,4 @@ public class SummaryFragment extends AbstractFragment {
 		return summaries;
 	}
 
-	private String doubleToText(final double d) {
-		String hoursWord;
-		if (d == 1 || d == 0) {
-			hoursWord = "hour";
-		} else {
-			hoursWord = "hours";
-		}
-		return d + " " + hoursWord;
-	}
 }

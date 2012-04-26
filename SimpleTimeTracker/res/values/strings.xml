@@ -20,6 +20,8 @@
     <string name="timer_week">Week : </string>
     <string name="timer_today">Today : </string>
     <string name="timer_date">Date : </string>
+     <string name="timer_category">Time spent : </string>
+       <string name="timer_default_time">00:00</string>
 
     <!-- Second tab : summary -->
     <string name="summary_title">Summary</string>

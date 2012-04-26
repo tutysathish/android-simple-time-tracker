@@ -61,6 +61,7 @@ public class ReportItems extends LinearLayout {
 		rowTextView.setText("  " + lineLabel);
 		rowTextView.setTextColor(getResources().getColorStateList(R.color.text_color_header));
 		rowTextView.setTag(HEADER);
+		rowTextView.setTextSize(16);
 
 		final LinearLayout reportLines = (LinearLayout) mReportItem.findViewById(R.id.report_lines);
 		reportLines.addView(rowTextView);
@@ -74,6 +75,7 @@ public class ReportItems extends LinearLayout {
 		final TextView rowTextView = new TextView(this.getContext());
 		rowTextView.setText("    " + lineLabel);
 		rowTextView.setTag(DETAIL);
+		rowTextView.setTextSize(16);
 
 		final LinearLayout reportLines = (LinearLayout) mReportItem.findViewById(R.id.report_lines);
 		reportLines.addView(rowTextView);

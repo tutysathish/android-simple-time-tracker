@@ -182,7 +182,7 @@ public class TimerFragment extends AbstractFragment {
 
 	private void showDialog() {
 		if (!sessionData.isPunchedOut()) {
-			final TimerEditDialog timerEditDialog = new TimerEditDialog(getActivity());
+			final TimerEditDialog timerEditDialog = new TimerEditDialog(getActivity(), R.style.DialogStyle);
 			timerEditDialog.buildEditDialog(sessionData.getCurrentTimerRecord(), this).show();
 		}
 	}

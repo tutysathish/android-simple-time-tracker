@@ -55,6 +55,12 @@ public class ReportFragment extends AbstractFragment {
 	}
 
 	@Override
+	public void onStart() {
+		super.onStart();
+		fillInReport();
+	}
+
+	@Override
 	public void onCreateContextMenu(final ContextMenu menu, final View view, final ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, view, menuInfo);
 		if (view.getTag() != null) {
@@ -96,12 +102,6 @@ public class ReportFragment extends AbstractFragment {
 		} else {
 			timerDBAdapter.updateTimer(timerToSave);
 		}
-		fillInReport();
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
 		fillInReport();
 	}
 

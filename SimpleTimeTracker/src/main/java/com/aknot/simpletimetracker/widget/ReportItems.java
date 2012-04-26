@@ -1,7 +1,6 @@
 package com.aknot.simpletimetracker.widget;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 import com.aknot.simpletimetracker.R;
 
 /**
+ * This widget create a report list with a specific layout.
  * 
  * @author aknot
  * 
@@ -48,22 +48,18 @@ public class ReportItems extends LinearLayout {
 	}
 
 	public void putHeader(final String headerLabel) {
-		if (mReportItem == null) {
-			addItem();
-		}
+		checkReportItem();
 
 		final TextView reportWeek = (TextView) mReportItem.findViewById(R.id.report_week);
 		reportWeek.setText(headerLabel);
 	}
 
 	public TextView putDay(final String lineLabel) {
-		if (mReportItem == null) {
-			addItem();
-		}
+		checkReportItem();
 
 		final TextView rowTextView = new TextView(this.getContext());
 		rowTextView.setText("  " + lineLabel);
-		rowTextView.setTextColor(Color.GREEN);
+		rowTextView.setTextColor(getResources().getColorStateList(R.color.text_color_header));
 		rowTextView.setTag(HEADER);
 
 		final LinearLayout reportLines = (LinearLayout) mReportItem.findViewById(R.id.report_lines);
@@ -73,19 +69,25 @@ public class ReportItems extends LinearLayout {
 	}
 
 	public TextView putHours(final String lineLabel) {
-		if (mReportItem == null) {
-			addItem();
-		}
+		checkReportItem();
 
 		final TextView rowTextView = new TextView(this.getContext());
 		rowTextView.setText("    " + lineLabel);
-		rowTextView.setTextColor(Color.WHITE);
 		rowTextView.setTag(DETAIL);
 
 		final LinearLayout reportLines = (LinearLayout) mReportItem.findViewById(R.id.report_lines);
 		reportLines.addView(rowTextView);
 
 		return rowTextView;
+	}
+
+	/**
+	 * Check existence of the report item.
+	 */
+	private void checkReportItem() {
+		if (mReportItem == null) {
+			addItem();
+		}
 	}
 
 }

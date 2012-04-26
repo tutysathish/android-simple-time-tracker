@@ -133,7 +133,7 @@ public class ReportFragment extends AbstractFragment {
 	}
 
 	private void showTimerDialog(final int rowId, final long date) {
-		final TimerEditDialog timerEditDialog = new TimerEditDialog(this.getActivity());
+		final TimerEditDialog timerEditDialog = new TimerEditDialog(this.getActivity(), R.style.DialogStyle);
 		timerEditDialog.buildEditDialog(rowId, date, this).show();
 	}
 

@@ -20,6 +20,14 @@ import com.aknot.simpletimetracker.model.TimerRecord;
 
 public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSetListener {
 
+	/**
+	 * @param context
+	 * @param theme
+	 */
+	public TimerEditDialog(final Context context, final int theme) {
+		super(context, theme);
+	}
+
 	private enum TimerFieldSelected {
 		IN, OUT
 	}
@@ -30,10 +38,6 @@ public class TimerEditDialog extends Dialog implements TimePickerDialog.OnTimeSe
 	private TimerFieldSelected selectedTimeField;
 
 	private TimerRecord timerRecord;
-
-	public TimerEditDialog(final Context context) {
-		super(context);
-	}
 
 	/**
 	 * Build the timer edit dialog for the report fragment.

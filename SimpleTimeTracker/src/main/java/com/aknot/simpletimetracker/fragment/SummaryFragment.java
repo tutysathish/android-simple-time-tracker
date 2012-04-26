@@ -23,6 +23,7 @@ import com.aknot.simpletimetracker.model.TimerRecord;
 import com.aknot.simpletimetracker.utils.DateTimeUtils;
 
 /**
+ * This fragment represent the summary page.
  * 
  * @author Aknot
  * 
@@ -93,13 +94,13 @@ public class SummaryFragment extends AbstractFragment {
 		final Map<String, Map<String, Long>> summaries = loadData(categoryRecord);
 
 		final TextView weekSummary = (TextView) getView().findViewById(R.id.tvWeekSummary);
-		weekSummary.setText("Week " + DateTimeUtils.getCurrentWeek() + " : " + DateTimeUtils.timeInMillisToText(weekTimeElapsed));
+		weekSummary.setText(DateTimeUtils.timeInMillisToText(weekTimeElapsed));
 
 		final TextView targetHour = (TextView) getView().findViewById(R.id.tvTargetHour);
 		if (category != null) {
-			targetHour.setText("Target : " + doubleToText(category.getTargetHour()));
+			targetHour.setText(doubleToText(category.getTargetHour()));
 		} else {
-			targetHour.setText("Target :");
+			targetHour.setText(getString(R.string.summary_no_target));
 		}
 
 		final LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.linearLayoutSummary);
@@ -111,6 +112,7 @@ public class SummaryFragment extends AbstractFragment {
 			final TextView headerTextView = new TextView(this.getActivity());
 			headerTextView.setText(entry.getKey());
 			headerTextView.setTextColor(Color.GREEN);
+			headerTextView.setTextSize(18);
 
 			linearLayout.addView(headerTextView);
 
@@ -118,6 +120,7 @@ public class SummaryFragment extends AbstractFragment {
 				final long totalTimeInMillis = rowCaption.getValue();
 				final TextView rowTextView = new TextView(this.getActivity());
 				rowTextView.setText("    " + rowCaption.getKey() + ": " + DateTimeUtils.timeInMillisToText(totalTimeInMillis));
+				rowTextView.setTextSize(18);
 				linearLayout.addView(rowTextView);
 			}
 		}

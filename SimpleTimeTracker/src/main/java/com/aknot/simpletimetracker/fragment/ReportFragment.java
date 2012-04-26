@@ -26,6 +26,8 @@ import com.aknot.simpletimetracker.widget.ReportItems;
 
 /**
  * 
+ * This fragment represent the report page.
+ * 
  * @author Aknot
  * 
  */
@@ -49,7 +51,7 @@ public class ReportFragment extends AbstractFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		fillInReport();
+		// fillInReport();
 	}
 
 	@Override
@@ -94,6 +96,12 @@ public class ReportFragment extends AbstractFragment {
 		} else {
 			timerDBAdapter.updateTimer(timerToSave);
 		}
+		fillInReport();
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
 		fillInReport();
 	}
 

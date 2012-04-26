@@ -29,7 +29,7 @@ public class DecimalDigitsInputFilter implements InputFilter {
 				break;
 			}
 		}
-		if (dotPos > 0) {
+		if (dotPos >= 0) {
 			// if the text is entered before the dot
 			if (dend <= dotPos) {
 				return null;

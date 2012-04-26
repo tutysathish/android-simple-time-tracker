@@ -36,7 +36,7 @@
     <string name="report_week">Week</string>
 
     <!-- Category activity -->
-    <string name="category_name_label">Category Name :</string>
+    <string name="category_name_label">Category Name (max 8 char) :</string>
     <string name="category_descr_label">Category Description :</string>
     <string name="category_target_label">Target Hour :</string>
     <string name="category_save_button">Save</string>

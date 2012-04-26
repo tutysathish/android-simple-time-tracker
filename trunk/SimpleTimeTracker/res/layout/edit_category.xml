@@ -7,30 +7,24 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/category_name_label" >
-    </TextView>
+        android:text="@string/category_name_label" />
 
     <EditText
         android:id="@+id/edit_time_category_name_field"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:capitalize="words"
-        android:inputType="text" >
-    </EditText>
+        android:inputType="text" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/category_descr_label" >
-    </TextView>
+        android:text="@string/category_descr_label" />
 
     <EditText
         android:id="@+id/edit_time_category_desc_field"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:capitalize="sentences"
-        android:inputType="text" >
-    </EditText>
+        android:inputType="text" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,8 +35,7 @@
         android:id="@+id/edit_target_hours_field"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal" >
-    </EditText>
+        android:inputType="numberDecimal" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -55,8 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/category_save_button"
-            android:textSize="20sp" >
-        </Button>
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/edit_time_category_cancel_button"

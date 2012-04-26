@@ -2,12 +2,14 @@ package com.aknot.simpletimetracker.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.aknot.simpletimetracker.R;
 import com.aknot.simpletimetracker.activity.CategoryActivity;
+import com.aknot.simpletimetracker.filter.DecimalDigitsInputFilter;
 import com.aknot.simpletimetracker.model.CategoryRecord;
 
 public class CategoryEditDialog extends Dialog {
@@ -21,7 +23,9 @@ public class CategoryEditDialog extends Dialog {
 
 		final EditText catNameField = (EditText) findViewById(R.id.edit_time_category_name_field);
 		final EditText catDescField = (EditText) findViewById(R.id.edit_time_category_desc_field);
+
 		final EditText catTargetField = (EditText) findViewById(R.id.edit_target_hours_field);
+		catTargetField.setFilters(new InputFilter[] { new DecimalDigitsInputFilter(1) });
 
 		final Button saveButton = (Button) findViewById(R.id.edit_time_category_save_button);
 		final Button cancelButton = (Button) findViewById(R.id.edit_time_category_cancel_button);
@@ -58,5 +62,4 @@ public class CategoryEditDialog extends Dialog {
 
 		return this;
 	}
-
 }

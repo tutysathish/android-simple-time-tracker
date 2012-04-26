@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="ViewPagerIndicator">
+    <declare-styleable name="TitlePageIndicator">
 
         <!-- Style of the title indicator. -->
         <attr name="vpiTitlePageIndicatorStyle" format="reference" />

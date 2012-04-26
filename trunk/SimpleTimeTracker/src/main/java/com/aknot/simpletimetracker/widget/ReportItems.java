@@ -75,7 +75,7 @@ public class ReportItems extends LinearLayout {
 		final TextView rowTextView = new TextView(this.getContext());
 		rowTextView.setText("    " + lineLabel);
 		rowTextView.setTag(DETAIL);
-		rowTextView.setTextSize(16);
+		rowTextView.setTextSize(14);
 
 		final LinearLayout reportLines = (LinearLayout) mReportItem.findViewById(R.id.report_lines);
 		reportLines.addView(rowTextView);

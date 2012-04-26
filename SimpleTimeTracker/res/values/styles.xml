@@ -9,7 +9,7 @@
     </style>
 
     <!-- Spinner Style -->
-    <style name="Spinner" parent="android:Widget">
+    <style name="Spinner" parent="@android:Widget">
         <item name="android:background">@drawable/spinner_background_holo_dark</item>
         <item name="android:clickable">true</item>
     </style>
@@ -23,12 +23,12 @@
     </style>
 
     <!-- Progress Bar Style -->
-    <style name="CustomProgressBarHorizontal" parent="android:Widget.ProgressBar.Horizontal">
+    <style name="CustomProgressBarHorizontal" parent="@android:Widget.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/custom_progress_bar</item>
     </style>
 
     <!-- Dialog Style -->
-    <style name="DialogStyle" parent="android:style/Theme.Dialog">
+    <style name="DialogStyle" parent="@android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
     </style>

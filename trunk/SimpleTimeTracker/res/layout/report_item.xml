@@ -10,26 +10,30 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="@drawable/custom_timer"
+        android:background="@drawable/shape_timers"
         android:orientation="horizontal" >
 
         <LinearLayout
             android:layout_width="60dp"
             android:layout_height="fill_parent"
-            android:background="@drawable/custom_timer"
+            android:background="@drawable/shape_reports"
             android:gravity="center|top"
             android:orientation="vertical" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/report_week" />
+                android:text="@string/report_week"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/report_week"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/dummy" />
+                android:text="@string/dummy"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout

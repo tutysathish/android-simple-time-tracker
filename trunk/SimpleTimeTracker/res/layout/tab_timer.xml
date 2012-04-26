@@ -98,7 +98,7 @@
             android:id="@+id/linearLayoutStart"
             android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_timer"
+            android:background="@drawable/shape_timers"
             android:orientation="vertical" >
 
             <TextView
@@ -127,7 +127,7 @@
             android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/custom_timer"
+            android:background="@drawable/shape_timers"
             android:orientation="vertical" >
 
             <TextView

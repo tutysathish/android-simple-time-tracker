@@ -20,6 +20,7 @@ import com.aknot.simpletimetracker.fragment.ReportFragment;
 import com.aknot.simpletimetracker.fragment.SummaryFragment;
 import com.aknot.simpletimetracker.fragment.TimerFragment;
 import com.aknot.simpletimetracker.indicator.TitlePageIndicator;
+import com.aknot.simpletimetracker.observer.Notifier;
 
 /**
  * 
@@ -99,5 +100,9 @@ public class ViewPagerActivity extends FragmentActivity {
 
 		final TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
 		indicator.setViewPager(pager, 1);
+
+		Notifier.addObservers(summaryFragment);
+		Notifier.addObservers(timerFragment);
+		Notifier.addObservers(reportFragment);
 	}
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Observable;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -51,12 +52,6 @@ public class ReportFragment extends AbstractFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		// fillInReport();
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
 		fillInReport();
 	}
 
@@ -187,4 +182,10 @@ public class ReportFragment extends AbstractFragment {
 		final AlertDialog alert = builder.create();
 		alert.show();
 	}
+
+	@Override
+	public void update(Observable observable, Object data) {
+		fillInReport();
+	}
+
 }

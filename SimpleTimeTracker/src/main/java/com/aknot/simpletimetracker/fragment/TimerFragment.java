@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
+import java.util.Observable;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.aknot.simpletimetracker.dialog.CategoriesDialog;
 import com.aknot.simpletimetracker.dialog.TimerEditDialog;
 import com.aknot.simpletimetracker.model.CategoryRecord;
 import com.aknot.simpletimetracker.model.TimerRecord;
+import com.aknot.simpletimetracker.observer.Notifier;
 import com.aknot.simpletimetracker.utils.DateTimeUtils;
 import com.aknot.simpletimetracker.utils.SessionData;
 
@@ -137,6 +139,8 @@ public class TimerFragment extends AbstractFragment {
 			((TextView) getView().findViewById(R.id.mainViewChronOutput)).setTextColor(Color.RED);
 
 			saveState();
+
+			Notifier.notifyFragments("Check Out completed");
 		}
 	}
 
@@ -262,6 +266,10 @@ public class TimerFragment extends AbstractFragment {
 		chronometer.start();
 		setupScreenLabels();
 		saveState();
+	}
+
+	@Override
+	public void update(Observable observable, Object data) {
 	}
 
 }

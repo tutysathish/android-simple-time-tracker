@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Observable;
 import java.util.TreeMap;
 
 import android.graphics.Color;
@@ -156,6 +157,11 @@ public class SummaryFragment extends AbstractFragment {
 		}
 
 		return summaries;
+	}
+
+	@Override
+	public void update(Observable observable, Object data) {
+		fillInSummary((CategoryRecord) catSpinner.getSelectedItem());
 	}
 
 }

@@ -1,6 +1,6 @@
-#summary Help page and screenshots for version 1.1.
+#summary Help page and screenshots for version 1.1 and 1.2
 
-= Version 1.1 help page =
+= Version 1.1 - 1.2 help page =
 
 Application start on the first tab of the main screen.
 

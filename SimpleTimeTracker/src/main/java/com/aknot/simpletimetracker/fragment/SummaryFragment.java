@@ -94,17 +94,17 @@ public class SummaryFragment extends AbstractFragment {
 
 		final Map<String, Map<String, Long>> summaries = loadData(categoryRecord);
 
-		final TextView weekSummary = (TextView) getView().findViewById(R.id.tvWeekSummary);
+		final TextView weekSummary = (TextView) getActivity().findViewById(R.id.tvWeekSummary);
 		weekSummary.setText(DateTimeUtils.timeInMillisToText(weekTimeElapsed));
 
-		final TextView targetHour = (TextView) getView().findViewById(R.id.tvTargetHour);
+		final TextView targetHour = (TextView) getActivity().findViewById(R.id.tvTargetHour);
 		if (category != null) {
 			targetHour.setText(DateTimeUtils.doubleToText(category.getTargetHour()));
 		} else {
 			targetHour.setText(getString(R.string.summary_no_target));
 		}
 
-		final LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.linearLayoutSummary);
+		final LinearLayout linearLayout = (LinearLayout) getActivity().findViewById(R.id.linearLayoutSummary);
 		linearLayout.removeAllViews();
 
 		for (final Entry<String, Map<String, Long>> entry : summaries.entrySet()) {
@@ -119,7 +119,7 @@ public class SummaryFragment extends AbstractFragment {
 
 			for (final Entry<String, Long> rowCaption : summaryRows.entrySet()) {
 				final long totalTimeInMillis = rowCaption.getValue();
-				final TextView rowTextView = new TextView(this.getActivity());
+				final TextView rowTextView = new TextView(getActivity());
 				rowTextView.setText("    " + rowCaption.getKey() + ": " + DateTimeUtils.timeInMillisToText(totalTimeInMillis));
 				rowTextView.setTextSize(18);
 				linearLayout.addView(rowTextView);
@@ -160,8 +160,10 @@ public class SummaryFragment extends AbstractFragment {
 	}
 
 	@Override
-	public void update(Observable observable, Object data) {
-		fillInSummary((CategoryRecord) catSpinner.getSelectedItem());
+	public void update(final Observable observable, final Object data) {
+		if (getActivity() != null) {
+			fillInSummary((CategoryRecord) catSpinner.getSelectedItem());
+		}
 	}
 
 }

@@ -1,3 +1,7 @@
+BUG:
+* Seems that observer are called more than once
+* Correct adding observable
+
 Summary screen:
 * Add a shape for each list items. Divider to make a block per day.
 

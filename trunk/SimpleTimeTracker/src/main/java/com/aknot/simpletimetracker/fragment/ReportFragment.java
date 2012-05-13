@@ -104,7 +104,7 @@ public class ReportFragment extends AbstractFragment {
 
 		final Map<String, List<TimerRecord>> allRecords = timerDBAdapter.fetchAllTimerRecordsByWeek();
 
-		final ReportItems reportItems = (ReportItems) getView().findViewById(R.id.reportItems);
+		final ReportItems reportItems = (ReportItems) getActivity().findViewById(R.id.reportItems);
 		reportItems.removeAllViews();
 
 		for (final Entry<String, List<TimerRecord>> entry : allRecords.entrySet()) {
@@ -184,8 +184,10 @@ public class ReportFragment extends AbstractFragment {
 	}
 
 	@Override
-	public void update(Observable observable, Object data) {
-		fillInReport();
+	public void update(final Observable observable, final Object data) {
+		if (getActivity() != null) {
+			fillInReport();
+		}
 	}
 
 }

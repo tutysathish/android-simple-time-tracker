@@ -1,0 +1,19 @@
+Summary screen:
+* Add a shape for each list items. Divider to make a block per day.
+
+Timer screen:
+* Category to put under timer with a shape
+* Remove today and week timers
+* Add on click event to switch between timers (timer, today, week, remaining...)
+* Add a shader on text that show the type of timer
+* See what to do with on end timer (estimated end)
+* When click on IN --> update summary and report
+* Fix problem with OUT (no view)
+
+Report screen:
+* Add a nice PLUS button in action bar while entering this screen
+* New popup for adding a record with selection on day
+* When editing a timer, if not the same day show day slider (or other solution?)
+* Click on week --> send the report by mail
+* Find a way to show more weeks in the list (dynamic)
+* When adding a record refresh summary and timer

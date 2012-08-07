@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Application -->
+    <string name="app_name">SimpleTimeTracker</string>
+    <string name="database_name">time_tracker</string>
+
+    <!-- Dummy -->
+    <string name="dummy">Dummy</string>
+
+    <!-- Main activity -->
+    <string name="categories_label">Manage Categories</string>
+
+    <!-- First tab : timer -->
+    <string name="timer_title">Timer</string>
+    <string name="timer_button_in">In</string>
+    <string name="timer_button_out">Out</string>
+    <string name="timer_start">Start time</string>
+    <string name="timer_end">End time</string>
+    <string name="timer_week">Week : </string>
+    <string name="timer_today">Today : </string>
+    <string name="timer_date">Date : </string>
+    <string name="timer_category">Time spent : </string>
+    <string name="timer_default_time">00:00</string>
+
+    <!-- Second tab : summary -->
+    <string name="summary_title">Summary</string>
+    <string name="summary_total">Total : </string>
+    <string name="summary_target">Target : </string>
+    <string name="summary_no_target">No target set.</string>
+    <!-- Third tab : reports -->
+    <string name="report_title">Reports</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_del">Delete</string>
+    <string name="menu_add">Add</string>
+    <string name="report_week">Week</string>
+
+    <!-- Category activity -->
+    <string name="category_name_label">Category Name (max 8 char) :</string>
+    <string name="category_descr_label">Category Description :</string>
+    <string name="category_target_label">Target Hour :</string>
+    <string name="category_save_button">Save</string>
+    <string name="category_cancel_buttton">Cancel</string>
+    <string name="category_menu_add">Create a new category</string>
+    <string name="category_menu_edit">Edit</string>
+    <string name="category_menu_del">Delete</string>
+
+    <!-- Timer Edit Activity -->
+    <string name="category_prompt">Select Category</string>
+    <string name="activity_prompt">Activity:</string>
+
+    <!-- Default Categories -->
+    <string-array name="default_categories">
+        <item>Eating</item>
+        <item>Working</item>
+    </string-array>
+
+</resources>
